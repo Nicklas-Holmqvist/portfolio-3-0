@@ -12,8 +12,11 @@ export const NavHeader: React.FC<NavHeader> = () => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
 
+  const headerHeight: number = 70;
+  const logoSize: number = 40;
+
   const changeBackgroundColor: () => void = () => {
-    window.scrollY >= 80
+    window.scrollY >= headerHeight
       ? setActiveBackgroundColor(true)
       : setActiveBackgroundColor(false);
   };
@@ -29,7 +32,7 @@ export const NavHeader: React.FC<NavHeader> = () => {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 80px;
+    height: ${headerHeight}px;
     padding: 0 10rem;
     background-color: ${activeBackgroundColor ? '#2a2a2ada' : 'none'};
     transition: all 0.5s;
@@ -44,7 +47,7 @@ export const NavHeader: React.FC<NavHeader> = () => {
 
   return (
     <Header>
-      <Image src="/logo.png" alt="logo" width={40} height={40} />
+      <Image src="/logo.png" alt="logo" width={logoSize} height={logoSize} />
       <Nav>
         {navLinks.map((navLink, index) => (
           <NavLink key={index} linkText={navLink} />
