@@ -4,6 +4,17 @@ import styled from 'styled-components';
 export interface Layout {}
 
 export const Layout: React.FC<Layout> = () => {
+  const Main = styled.main``;
+
+  const Section = styled.section`
+    height: 100vh;
+    padding: 6rem 10rem;
+  `;
+
+  const Article = styled.article`
+    height: 100vh;
+    padding: 6rem 10rem;
+  `;
   return (
     <Main>
       <Section role="contentinfo" aria-label="Bakgrundsbild för startsidan">
@@ -39,15 +50,3 @@ export const Layout: React.FC<Layout> = () => {
     </Main>
   );
 };
-
-const Main = styled.main``;
-
-const Section = styled.section`
-  height: 100vh;
-  padding: 6rem 10rem;
-`;
-
-const Article = styled.article`
-  height: 100vh;
-  padding: 6rem 10rem;
-`;
