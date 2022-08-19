@@ -1,5 +1,8 @@
 # Nicklasfoto 3.0
 
+## Goal
+Create with as much semantic html and accessability I can. It will not be perfect but one step in the right way.
+
 ## Content
 This is my second redone of my personal photography portfolio this year(2022).
 The first go was a simple ReactJS/Typescript page with almost all data fetched from Contentful.
