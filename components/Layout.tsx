@@ -8,7 +8,10 @@ export const Layout: React.FC<Layout> = () => {
 
   const Section = styled.section`
     height: 100vh;
-    padding: 6rem 10rem;
+    background-image: url('/images/hero.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
   `;
 
   const Article = styled.article`
@@ -17,9 +20,10 @@ export const Layout: React.FC<Layout> = () => {
   `;
   return (
     <Main>
-      <Section role="contentinfo" aria-label="Bakgrundsbild för startsidan">
-        Hero
-      </Section>
+      <Section
+        role="contentinfo"
+        aria-label="Bakgrundsbild för startsidan"
+      ></Section>
       <Article
         role="contentinfo"
         aria-label="Information om det fotografiska projektet Glömd värld i Marks härad"
