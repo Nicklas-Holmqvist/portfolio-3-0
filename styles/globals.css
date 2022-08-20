@@ -1,1 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Alike&family=Lato:ital,wght@0,100;0,300;1,300&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
