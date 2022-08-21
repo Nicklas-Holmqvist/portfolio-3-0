@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
 import { createGlobalStyle } from 'styled-components';
 
 import { Layout } from '../components/Layout';
@@ -56,6 +55,7 @@ h3 {
 p {
   margin: 0px;
   font-family: 'Lato', sans-serif;
+  line-height: 1.4rem;
 }
 
 a {
