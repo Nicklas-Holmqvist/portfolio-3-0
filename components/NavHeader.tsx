@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +12,7 @@ export interface HeaderProps {
   active: boolean;
 }
 // Hämta hem från CMS
-const navLinks = ['Projekt', 'Gallerier', 'Om mig'];
+const navLinks = ['Projekt', 'Gallerier', 'About'];
 
 export const NavHeader: React.FC<NavHeader> = () => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
@@ -32,7 +33,9 @@ export const NavHeader: React.FC<NavHeader> = () => {
 
   return (
     <Header height={headerHeight} active={activeBackgroundColor}>
-      <Image src="/logo.png" alt="logo" width={logoSize} height={logoSize} />
+      <Link href={'/'}>
+        <Image src="/logo.png" alt="logo" width={logoSize} height={logoSize} />
+      </Link>
       <Nav>
         {navLinks.map((navLink, index) => (
           <NavLink key={index} linkText={navLink} />

@@ -5,6 +5,7 @@ import { ProjectSection } from './ProjectInformation';
 import { GalleryDetails } from './GalleryDetails';
 import { GalleryLandscapes } from './GalleryLandscapes';
 import { GalleryOldBuildings } from './GalleryOldBuildings';
+import { About } from './About';
 
 export interface Layout {}
 
@@ -43,8 +44,13 @@ export const Layout: React.FC<Layout> = () => {
       >
         <GalleryDetails />
       </Article>
-      <Article role="contentinfo" aria-label="Vem är Nicklas Holmqvist">
-        <h2>Om mig</h2>
+      <Article
+        role="contentinfo"
+        aria-label="Vem är Nicklas Holmqvist"
+        id="about"
+        className="about"
+      >
+        <About />
       </Article>
     </Main>
   );
@@ -72,6 +78,9 @@ const Article = styled.article`
   box-sizing: border-box;
   padding: 6rem 10rem 4rem 10rem;
   display: flex;
+  .about {
+    justify-content: space-between;
+  }
   @media (max-width: 1500px) {
     padding: 4rem 5rem 3rem 5rem;
   }
@@ -83,7 +92,6 @@ const Article = styled.article`
     }
   }
   @media (max-width: 1100px) {
-    // min-height: 750px;
     padding: 2rem 4rem 1rem 4rem;
     flex-direction: column;
     &.oldBuildings {
