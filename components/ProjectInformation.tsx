@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 import { NavLink } from './NavLink';
 
-export const ProjectSection = () => {
+interface ProjectSection {}
+
+export const ProjectSection: React.FC<ProjectSection> = () => {
   return (
     <>
       <ProjectInformation>

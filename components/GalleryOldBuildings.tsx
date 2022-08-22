@@ -3,7 +3,9 @@ import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-export const GalleryOldBuildings = () => {
+interface GalleryOldBuildings {}
+
+export const GalleryOldBuildings: React.FC<GalleryOldBuildings> = () => {
   return (
     <>
       <InformationSection>
