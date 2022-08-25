@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import { Layout } from '../components/Layout';
 import { NavHeader } from '../components/NavHeader';
+import { FooterSection } from '../components/Footer';
 
 const Home: NextPage = () => {
   return (
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
       </Head>
       <NavHeader />
       <Layout />
-      <footer>Footer</footer>
+      <FooterSection />
     </>
   );
 };
