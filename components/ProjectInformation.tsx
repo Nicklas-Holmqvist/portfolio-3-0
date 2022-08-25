@@ -100,6 +100,7 @@ const ProjectReference = styled.section`
   justify-content: end;
   max-width: 475px;
   width: 100%;
+  padding-bottom: 1rem;
   h2 {
   }
   li {
