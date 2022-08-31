@@ -19,7 +19,7 @@ export const Layout: React.FC<Layout> = () => {
       <Article
         role="contentinfo"
         aria-label="Information om det fotografiska projektet Glömd värld i Marks härad"
-        id="projekt"
+        id="project"
         className="projekt"
       >
         <ProjectSection />
@@ -27,7 +27,7 @@ export const Layout: React.FC<Layout> = () => {
       <Article
         role="contentinfo"
         aria-label='Information om fotogalleriet "Det glömda landskapet"'
-        id="gallerier"
+        id="galleries"
       >
         <GalleryLandscapes />
       </Article>

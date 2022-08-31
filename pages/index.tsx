@@ -33,7 +33,7 @@ const Home: NextPage = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavHeader navLinks={data.allNavigations} />
+      <NavHeader navLinks={data.allNavigations} iconData={data.allIcons} />
       <Layout />
       <FooterSection />
     </>

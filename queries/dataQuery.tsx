@@ -1,11 +1,11 @@
 export interface DataQuery {
-  allSections: AllSections[];
+  allSections: AllSection[];
   allHeads: AllHeads;
-  allIcons: AllIcons[];
-  allNavigations: AllNavigations[];
+  allIcons: AllIcon[];
+  allNavigations: AllNavigation[];
 }
 
-export interface AllSections {
+export interface AllSection {
   titleFirst: string;
   textFieldFirst: string;
 }
@@ -16,19 +16,21 @@ export interface AllHeads {
   metaContent: string;
 }
 
-export interface AllIcons {
+export interface AllIcon {
   icon: {
     url: string;
     alt: string;
   };
+  title: string;
   hasHover: boolean;
   size: number;
   href: string;
 }
 
-export interface AllNavigations {
+export interface AllNavigation {
   text: string;
   link: string;
+  order: number;
 }
 
 export const dataQuery = `query allData {
@@ -46,12 +48,14 @@ export const dataQuery = `query allData {
       url
       alt
     }
+    title
     hasHover
     size
     href
   }
-  allNavigations {
+  allNavigations(orderBy: [order_ASC]){
     text
     link
+    order
   }
 }`;
