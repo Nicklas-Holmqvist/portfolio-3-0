@@ -3,11 +3,27 @@ export interface DataQuery {
   allHeads: AllHeads;
   allIcons: AllIcon[];
   allNavigations: AllNavigation[];
+  hero: Hero;
 }
 
 export interface AllSection {
   titleFirst: string;
   textFieldFirst: string;
+  titleSecond: string;
+  textFieldSecond: string;
+  galleryButtonBoolean: boolean;
+  galleryButtonLink: string;
+  galleryButtonText: string;
+  imageBoolean: boolean;
+  image: {
+    url: string;
+    alt: string;
+  };
+  width: number;
+  height: number;
+  imageSubText: string;
+  ariaRole: string;
+  ariaLabel: string;
 }
 
 export interface AllHeads {
@@ -30,13 +46,34 @@ export interface AllIcon {
 export interface AllNavigation {
   text: string;
   link: string;
-  order: number;
+}
+
+export interface Hero {
+  image: {
+    url: string;
+    alt: string;
+  };
 }
 
 export const dataQuery = `query allData {
   allSections {
     titleFirst
     textFieldFirst
+    titleSecond
+    textFieldSecond
+    galleryButtonBoolean
+    galleryButtonLink
+    galleryButtonText
+    imageBoolean
+    image {
+      url
+      alt
+    }
+    width
+    height
+    imageSubText
+    ariaRole
+    ariaLabel
   }
   allHeads {
     title
@@ -48,14 +85,20 @@ export const dataQuery = `query allData {
       url
       alt
     }
-    title
-    hasHover
     size
     href
+    hasHover
+    title
   }
-  allNavigations(orderBy: [order_ASC]){
+  allNavigations(orderBy: order_ASC) {
     text
     link
-    order
   }
-}`;
+  hero {
+    image {
+      url
+      alt
+    }
+  }
+}
+`;
