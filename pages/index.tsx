@@ -1,12 +1,35 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
+import { gql } from 'graphql-request';
+import { request } from '../lib/datocms';
 
 import { Layout } from '../components/Layout';
 import { NavHeader } from '../components/NavHeader';
 import { FooterSection } from '../components/Footer';
 
-const Home: NextPage = () => {
+const SECTION_QUERY = `query Sections {
+  allSections {
+    titleFirst
+    textFieldFirst
+    titleSecond
+    textFieldSecond
+  }
+}`;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const data: any = await request({
+    query: SECTION_QUERY,
+  });
+  return {
+    props: { data },
+  };
+};
+
+const Home: NextPage = ({
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  console.log(data.allSections);
   return (
     <>
       <GlobalStyles />
