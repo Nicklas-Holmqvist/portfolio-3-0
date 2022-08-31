@@ -4,17 +4,18 @@ import styled, { css } from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
+import { AllNavigations } from '../queries/dataQuery';
 
-export interface NavHeader {}
+export interface NavHeaderProps {
+  navLinks: AllNavigations[];
+}
 
 export interface HeaderProps {
   height: number;
   active: boolean;
 }
-// Hämta hem från CMS
-const navLinks = ['Projekt', 'Gallerier', 'About'];
 
-export const NavHeader: React.FC<NavHeader> = () => {
+export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
 
@@ -38,7 +39,7 @@ export const NavHeader: React.FC<NavHeader> = () => {
       </Link>
       <Nav>
         {navLinks.map((navLink, index) => (
-          <NavLink key={index} linkText={navLink} />
+          <NavLink key={index} link={navLink.link} text={navLink.text} />
         ))}
       </Nav>
     </Header>
@@ -80,5 +81,5 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: end;
-  width: ${navLinks.length * 6}rem;
+  width: 18rem;
 `;

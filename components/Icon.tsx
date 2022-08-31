@@ -6,20 +6,25 @@ export interface IconProps {
   src: string;
   alt: string;
   size?: number;
-  isHover?: boolean;
+  hasHover?: boolean;
 }
 
 interface StyledIconProps {
-  isHover: boolean;
+  hasHover: boolean;
 }
 
-export const Icon: React.FC<IconProps> = ({ src, alt, size = 18, isHover }) => {
+export const Icon: React.FC<IconProps> = ({
+  src,
+  alt,
+  size = 18,
+  hasHover,
+}) => {
   if (!src) {
     return <span>{alt}</span>;
   }
   return (
     <StyledIcon
-      isHover={isHover || false}
+      hasHover={hasHover || false}
       src={src}
       height={size}
       width={size}
@@ -31,8 +36,8 @@ export const Icon: React.FC<IconProps> = ({ src, alt, size = 18, isHover }) => {
 const StyledIcon = styled(Image)<StyledIconProps>`
   cursor: pointer;
   transition: all 0, 2s;
-  ${({ isHover }) =>
-    isHover
+  ${({ hasHover }) =>
+    hasHover
       ? css`
           :hover {
             transform: scale(1.1);

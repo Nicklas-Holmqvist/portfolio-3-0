@@ -3,15 +3,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 export interface NavLink {
-  linkText: string;
+  link: string;
+  text: string;
 }
 
-export const NavLink: React.FC<NavLink> = ({ linkText }) => {
-  const linkPath: string = linkText.toLowerCase().replace(' ', '_');
-
+export const NavLink: React.FC<NavLink> = ({ link, text }) => {
   return (
-    <Link href={`#${linkPath}`}>
-      <LinkText>{linkText}</LinkText>
+    <Link href={`#${link}`}>
+      <LinkText>{text}</LinkText>
     </Link>
   );
 };

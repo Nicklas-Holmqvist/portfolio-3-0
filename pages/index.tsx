@@ -1,25 +1,18 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
-import { gql } from 'graphql-request';
 import { request } from '../lib/datocms';
 
 import { Layout } from '../components/Layout';
 import { NavHeader } from '../components/NavHeader';
 import { FooterSection } from '../components/Footer';
+import { dataQuery, DataQuery } from '../queries/dataQuery';
 
-const SECTION_QUERY = `query Sections {
-  allSections {
-    titleFirst
-    textFieldFirst
-    titleSecond
-    textFieldSecond
-  }
-}`;
-
-export const getStaticProps: GetStaticProps = async () => {
-  const data: any = await request({
-    query: SECTION_QUERY,
+export const getStaticProps: GetStaticProps<{
+  [key: string]: DataQuery;
+}> = async () => {
+  const data: DataQuery = await request({
+    query: dataQuery,
   });
   return {
     props: { data },
@@ -29,19 +22,18 @@ export const getStaticProps: GetStaticProps = async () => {
 const Home: NextPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(data.allSections);
   return (
     <>
       <GlobalStyles />
       <Head>
-        <title>Nicklas Holmqvist portfolio | Fotograf och utvecklare</title>
+        <title>{data.allHeads.title}</title>
         <meta
-          name="description"
-          content="En portfolio skapad av Nicklas Holmqvist som en frontend utvecklare för att visa fotografier ur projektet Glömd värld i marks härad."
+          name={data.allHeads.metaName}
+          content={data.allHeads.metaContent}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavHeader />
+      <NavHeader navLinks={data.allNavigations} />
       <Layout />
       <FooterSection />
     </>
