@@ -1,5 +1,5 @@
 export interface DataQuery {
-  allSections: AllSection[];
+  allSections: Section[];
   allHeads: AllHeads;
   allIcons: AllIcon[];
   allNavigations: AllNavigation[];
@@ -7,10 +7,17 @@ export interface DataQuery {
   logo: Logo;
 }
 
-export interface AllSection {
+export interface Section {
   titleFirst: string;
+  subTitle: string;
+  contentFirst: {
+    value: any;
+  };
   textFieldFirst: string;
   titleSecond: string;
+  contentSecond: {
+    value: any;
+  };
   textFieldSecond: string;
   galleryButtonBoolean: boolean;
   galleryButtonLink: string;
@@ -23,6 +30,7 @@ export interface AllSection {
   width: number;
   height: number;
   imageSubText: string;
+  sectionId: string;
   ariaRole: string;
   ariaLabel: string;
 }
@@ -66,10 +74,17 @@ export interface Logo {
 }
 
 export const dataQuery = `query allData {
-  allSections {
+  allSections(orderBy: order_ASC) {
     titleFirst
+    subTitle
+    contentFirst {
+      value
+    }
     textFieldFirst
     titleSecond
+    contentSecond {
+      value
+    }
     textFieldSecond
     galleryButtonBoolean
     galleryButtonLink
@@ -82,6 +97,7 @@ export const dataQuery = `query allData {
     width
     height
     imageSubText
+    sectionId
     ariaRole
     ariaLabel
   }
@@ -90,7 +106,7 @@ export const dataQuery = `query allData {
     metaName
     metaContent
   }
-  allIcons {
+  allIcons(orderBy: order_ASC) {
     image {
       url
       alt

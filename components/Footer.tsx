@@ -1,22 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import mail from '../assets/svg/mail.svg';
-import gitHub from '../assets/svg/akar-icons_github-fill.svg';
-import linkedIn from '../assets/svg/akar-icons_linkedin-v1-fill.svg';
-import facebook from '../assets/svg/ant-design_facebook-filled.svg';
-import instagram from '../assets/svg/instagram.svg';
 import { IconLink } from './IconLink';
 import { AllIcon } from '../queries/dataQuery';
 
 interface FooterSectionProps {
   iconData: AllIcon[];
-}
-
-interface Icons {
-  src: string;
-  alt: string;
-  href: string;
 }
 
 export const FooterSection: React.FC<FooterSectionProps> = ({ iconData }) => {
