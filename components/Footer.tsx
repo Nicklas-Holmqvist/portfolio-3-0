@@ -41,7 +41,7 @@ const Footer = styled.footer`
   align-items: center;
   flex-direction: column;
   padding-bottom: 1rem;
-  margin: auto;
+  // margin: auto;
 `;
 
 const IconContainer = styled.div`
