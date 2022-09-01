@@ -1,26 +1,41 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
+import { request } from '../lib/datocms';
 
 import { Layout } from '../components/Layout';
 import { NavHeader } from '../components/NavHeader';
 import { FooterSection } from '../components/Footer';
+import { dataQuery, DataQuery } from '../queries/dataQuery';
 
-const Home: NextPage = () => {
+export const getStaticProps: GetStaticProps<{
+  [key: string]: DataQuery;
+}> = async () => {
+  const data: DataQuery = await request({
+    query: dataQuery,
+  });
+  return {
+    props: { data },
+  };
+};
+
+const Home: NextPage = ({
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <GlobalStyles />
       <Head>
-        <title>Nicklas Holmqvist portfolio | Fotograf och utvecklare</title>
+        <title>{data.allHeads.title}</title>
         <meta
-          name="description"
-          content="En portfolio skapad av Nicklas Holmqvist som en frontend utvecklare för att visa fotografier ur projektet Glömd värld i marks härad."
+          name={data.allHeads.metaName}
+          content={data.allHeads.metaContent}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavHeader />
-      <Layout />
-      <FooterSection />
+      <NavHeader navLinks={data.allNavigations} logoData={data.logo} />
+      <Layout sectionData={data.allSections} />
+      <FooterSection iconData={data.allIcons} />
     </>
   );
 };
@@ -57,6 +72,7 @@ p {
   margin: 0px;
   font-family: 'Lato', sans-serif;
   line-height: 1.4rem;
+  padding-bottom: 0.8rem;  
 }
 
 a {
@@ -67,5 +83,9 @@ ul {
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
+  p {
+    padding: 0;
+  }
 }
+
 `;

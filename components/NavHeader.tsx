@@ -4,22 +4,23 @@ import styled, { css } from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
+import { Logo, AllNavigation } from '../queries/dataQuery';
 
-export interface NavHeader {}
+export interface NavHeaderProps {
+  navLinks: AllNavigation[];
+  logoData: Logo;
+}
 
-export interface HeaderProps {
+export interface StyledHeaderProps {
   height: number;
   active: boolean;
 }
-// Hämta hem från CMS
-const navLinks = ['Projekt', 'Gallerier', 'About'];
 
-export const NavHeader: React.FC<NavHeader> = () => {
+export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
 
   const headerHeight: number = 70;
-  const logoSize: number = 40;
 
   const changeBackgroundColor: () => void = () => {
     window.scrollY >= headerHeight
@@ -33,19 +34,24 @@ export const NavHeader: React.FC<NavHeader> = () => {
 
   return (
     <Header height={headerHeight} active={activeBackgroundColor}>
-      <Link href={'/'}>
-        <Image src="/logo.png" alt="logo" width={logoSize} height={logoSize} />
+      <Link href={logoData.href}>
+        <Image
+          src={logoData.image.url}
+          alt={logoData.image.alt}
+          width={logoData.size}
+          height={logoData.size}
+        />
       </Link>
       <Nav>
         {navLinks.map((navLink, index) => (
-          <NavLink key={index} linkText={navLink} />
+          <NavLink key={index} link={navLink.link} text={navLink.text} />
         ))}
       </Nav>
     </Header>
   );
 };
 
-const Header = styled.header<HeaderProps>`
+const Header = styled.header<StyledHeaderProps>`
   box-sizing: border-box;
   position: fixed;
   display: flex;
@@ -80,5 +86,5 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: end;
-  width: ${navLinks.length * 6}rem;
+  width: 18rem;
 `;
