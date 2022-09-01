@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
-import { AllIcon, AllNavigation } from '../queries/dataQuery';
+import { Logo, AllNavigation } from '../queries/dataQuery';
 
 export interface NavHeaderProps {
   navLinks: AllNavigation[];
-  iconData: AllIcon[];
+  logoData: Logo;
 }
 
 export interface StyledHeaderProps {
@@ -16,12 +16,11 @@ export interface StyledHeaderProps {
   active: boolean;
 }
 
-export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, iconData }) => {
+export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
 
   const headerHeight: number = 70;
-  const logo = iconData.filter((icon) => icon.title === 'Logo')[0];
 
   const changeBackgroundColor: () => void = () => {
     window.scrollY >= headerHeight
@@ -35,12 +34,12 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, iconData }) => {
 
   return (
     <Header height={headerHeight} active={activeBackgroundColor}>
-      <Link href={logo.href}>
+      <Link href={logoData.href}>
         <Image
-          src={logo.icon.url}
-          alt={logo.icon.alt}
-          width={logo.size}
-          height={logo.size}
+          src={logoData.image.url}
+          alt={logoData.image.alt}
+          width={logoData.size}
+          height={logoData.size}
         />
       </Link>
       <Nav>

@@ -7,8 +7,11 @@ import linkedIn from '../assets/svg/akar-icons_linkedin-v1-fill.svg';
 import facebook from '../assets/svg/ant-design_facebook-filled.svg';
 import instagram from '../assets/svg/instagram.svg';
 import { IconLink } from './IconLink';
+import { AllIcon } from '../queries/dataQuery';
 
-interface FooterSection {}
+interface FooterSectionProps {
+  iconData: AllIcon[];
+}
 
 interface Icons {
   src: string;
@@ -16,7 +19,7 @@ interface Icons {
   href: string;
 }
 
-export const FooterSection: React.FC<FooterSection> = () => {
+export const FooterSection: React.FC<FooterSectionProps> = ({ iconData }) => {
   const date = new Date();
 
   const icons: Icons[] = [

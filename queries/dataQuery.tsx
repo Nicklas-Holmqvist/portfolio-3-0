@@ -4,6 +4,7 @@ export interface DataQuery {
   allIcons: AllIcon[];
   allNavigations: AllNavigation[];
   hero: Hero;
+  logo: Logo;
 }
 
 export interface AllSection {
@@ -55,6 +56,15 @@ export interface Hero {
   };
 }
 
+export interface Logo {
+  image: {
+    url: string;
+    alt: string;
+  };
+  href: string;
+  size: number;
+}
+
 export const dataQuery = `query allData {
   allSections {
     titleFirst
@@ -99,6 +109,14 @@ export const dataQuery = `query allData {
       url
       alt
     }
+  }
+  logo {
+    image {
+      url
+      alt
+    }
+    href
+    size
   }
 }
 `;

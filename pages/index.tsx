@@ -22,7 +22,6 @@ export const getStaticProps: GetStaticProps<{
 const Home: NextPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(data);
   return (
     <>
       <GlobalStyles />
@@ -34,9 +33,9 @@ const Home: NextPage = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavHeader navLinks={data.allNavigations} iconData={data.allIcons} />
+      <NavHeader navLinks={data.allNavigations} logoData={data.logo} />
       <Layout />
-      <FooterSection />
+      <FooterSection iconData={data.allIcons} />
     </>
   );
 };

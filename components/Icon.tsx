@@ -6,7 +6,7 @@ export interface IconProps {
   src: string;
   alt: string;
   size?: number;
-  hasHover?: boolean;
+  hasHover: boolean;
 }
 
 interface StyledIconProps {
@@ -24,7 +24,7 @@ export const Icon: React.FC<IconProps> = ({
   }
   return (
     <StyledIcon
-      hasHover={hasHover || false}
+      hasHover={hasHover}
       src={src}
       height={size}
       width={size}
