@@ -22,40 +22,16 @@ interface Icons {
 export const FooterSection: React.FC<FooterSectionProps> = ({ iconData }) => {
   const date = new Date();
 
-  const icons: Icons[] = [
-    {
-      src: gitHub,
-      alt: 'Github',
-      href: 'https://github.com/Nicklas-Holmqvist',
-    },
-    {
-      src: instagram,
-      alt: 'Instagram',
-      href: 'https://www.instagram.com/nicklas.holmqvist/',
-    },
-    {
-      src: facebook,
-      alt: 'Facebook',
-      href: 'https://www.facebook.com/glomd.varld.marks.harad',
-    },
-    {
-      src: linkedIn,
-      alt: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/nicklas-holmqvist-b96b901a8/',
-    },
-    { src: mail, alt: 'Mail', href: 'mailto:nicklas_holmqvist@outlook.com' },
-  ];
-
   return (
     <Footer>
       <IconContainer>
-        {icons.map((icon, index) => (
+        {iconData.map((icon, index) => (
           <span key={index}>
             <IconLink
-              src={icon.src}
-              alt={icon.alt}
+              src={icon.image.url}
+              alt={icon.image.url}
               href={icon.href}
-              hasHover={true}
+              hasHover={icon.hasHover}
             />
           </span>
         ))}

@@ -34,7 +34,7 @@ export interface AllHeads {
 }
 
 export interface AllIcon {
-  icon: {
+  image: {
     url: string;
     alt: string;
   };
@@ -91,7 +91,7 @@ export const dataQuery = `query allData {
     metaContent
   }
   allIcons {
-    icon {
+    image {
       url
       alt
     }
