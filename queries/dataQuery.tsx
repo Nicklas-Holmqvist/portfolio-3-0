@@ -13,12 +13,10 @@ export interface Section {
   contentFirst: {
     value: any;
   };
-  textFieldFirst: string;
   titleSecond: string;
   contentSecond: {
     value: any;
   };
-  textFieldSecond: string;
   galleryButtonBoolean: boolean;
   galleryButtonLink: string;
   galleryButtonText: string;
@@ -80,12 +78,10 @@ export const dataQuery = `query allData {
     contentFirst {
       value
     }
-    textFieldFirst
     titleSecond
     contentSecond {
       value
     }
-    textFieldSecond
     galleryButtonBoolean
     galleryButtonLink
     galleryButtonText

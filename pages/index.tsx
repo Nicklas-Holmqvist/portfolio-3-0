@@ -72,6 +72,7 @@ p {
   margin: 0px;
   font-family: 'Lato', sans-serif;
   line-height: 1.4rem;
+  padding-bottom: 0.8rem;  
 }
 
 a {
@@ -82,5 +83,9 @@ ul {
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
+  p {
+    padding: 0;
+  }
 }
+
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledArticle = styled.article`
-  min-height: 960px;
+  min-height: 800px;
   height: 100%;
   max-width: 1900px;
   width: 100%;
@@ -9,6 +9,9 @@ export const StyledArticle = styled.article`
   box-sizing: border-box;
   padding: 6rem 10rem 4rem 10rem;
   display: flex;
+  #oldBuildings {
+    justify-content: center;
+  }
   .about {
     justify-content: space-between;
   }

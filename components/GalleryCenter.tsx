@@ -43,7 +43,6 @@ export const GalleryCenter: React.FC<GalleryCenterProps> = ({ data }) => {
 };
 
 const ImageSection = styled.section`
-  box-sizing: border-box;
   flex: 1;
   height: 100%;
   display: flex;
@@ -52,20 +51,19 @@ const ImageSection = styled.section`
 `;
 
 const InformationSection = styled.section`
-  box-sizing: border-box;
+  height: 100%;
   flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  p {
-    padding-bottom: 2.5rem;
-  }
 `;
 
 const InformationContainer = styled.div`
   max-width: 475px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
+  height: 100%;
 `;
 
 const ImageContainer = styled.div`
@@ -73,6 +71,7 @@ const ImageContainer = styled.div`
 `;
 
 const LinkButton = styled.a`
+  width: 5rem;
   margin-top: 2rem;
   padding: 0.4rem 1.1rem 0.5rem 1.1rem;
   border: 2px solid #d9d9d9;

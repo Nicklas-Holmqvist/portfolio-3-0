@@ -5,7 +5,7 @@ import { Hero } from './Hero';
 import { About } from './About';
 import { Section } from '../queries/dataQuery';
 import { GalleryCenter } from './GalleryCenter';
-import { ProjectSection } from './ProjectInformation';
+import { ProjectSection } from './ProjectSection';
 import { GalleryStandard } from './GalleryStandard';
 export interface Layout {
   sectionData: Section[];
