@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
@@ -18,6 +18,10 @@ export interface StyledHeaderProps {
   active: boolean;
 }
 
+interface StyledMobileMenu {
+  animateClose: boolean;
+}
+
 export const NavHeader: React.FC<NavHeaderProps> = ({
   navLinks,
   logoData,
@@ -25,6 +29,9 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
 }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
+  const [activeMobileMenu, setActiveMobileMenu] = useState<boolean>(false);
+  const [mobileView, setMobileView] = useState<boolean>(false);
+  const [animateClose, setAnimateClose] = useState<boolean>(false);
 
   const headerHeight: number = 70;
 
@@ -34,40 +41,93 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
       : setActiveBackgroundColor(false);
   };
 
+  const changeMobileView: () => void = () => {
+    const screenWidth = window.visualViewport.width;
+    if (screenWidth <= 800) setMobileView(true);
+    else {
+      setMobileView(false);
+      setActiveMobileMenu(false);
+    }
+  };
+
+  const closeMenu: () => void = () => {
+    setAnimateClose(!animateClose);
+    setTimeout(() => {
+      setActiveMobileMenu(false);
+      setAnimateClose(false);
+    }, 1000);
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', changeBackgroundColor);
+    window.addEventListener('resize', changeMobileView);
   });
 
   return (
     <>
       <Header height={headerHeight} active={activeBackgroundColor}>
-        <MobileMenu>
-          <MobileNav>
-            {navLinks.map((navLink, index) => (
-              <NavLink key={index} link={navLink.link} text={navLink.text} />
-            ))}
-          </MobileNav>
-          <FooterSection iconData={iconData} />
-        </MobileMenu>
-        <DesktopMenu>
-          <Link href={logoData.href}>
-            <Image
-              src={logoData.image.url}
-              alt={logoData.image.alt}
-              width={logoData.size}
-              height={logoData.size}
-            />
-          </Link>
-          <DesktopNav>
-            {navLinks.map((navLink, index) => (
-              <NavLink key={index} link={navLink.link} text={navLink.text} />
-            ))}
-          </DesktopNav>
-        </DesktopMenu>
+        {mobileView ? (
+          <span onClick={() => setActiveMobileMenu(!activeMobileMenu)}>H</span>
+        ) : null}
+        {mobileView ? (
+          activeMobileMenu ? (
+            <MobileMenu animateClose={animateClose}>
+              <span onClick={closeMenu}>C</span>
+              <MobileNav>
+                {navLinks.map((navLink, index) => (
+                  <NavLink
+                    key={index}
+                    link={navLink.link}
+                    text={navLink.text}
+                  />
+                ))}
+              </MobileNav>
+              <FooterSection iconData={iconData} />
+            </MobileMenu>
+          ) : null
+        ) : (
+          <DesktopMenu>
+            <Link href={logoData.href}>
+              <Image
+                src={logoData.image.url}
+                alt={logoData.image.alt}
+                width={logoData.size}
+                height={logoData.size}
+              />
+            </Link>
+            <DesktopNav>
+              {navLinks.map((navLink, index) => (
+                <NavLink key={index} link={navLink.link} text={navLink.text} />
+              ))}
+            </DesktopNav>
+          </DesktopMenu>
+        )}
       </Header>
     </>
   );
 };
+
+const menuOpen = keyframes`
+from {
+  opacity: 0;
+  width: 0%;
+}
+to {
+  opacity: 1;
+  width: 100%;
+}
+`;
+
+const menuClose = keyframes`
+from {
+  opacity: 1;
+  width: 100%;
+}
+to {
+  opacity: 0;
+  width: 0%;
+}
+`;
 
 const Header = styled.header<StyledHeaderProps>`
   box-sizing: border-box;
@@ -101,23 +161,32 @@ const DesktopMenu = styled.div`
   align-items: center;
   height: 100%;
   max-width: 1900px;
-  display: none;
   padding: 0 10rem;
 `;
 
-const MobileMenu = styled.aside`
+const MobileMenu = styled.aside<StyledMobileMenu>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  height: 100vh;
-  right: 0;
+  opacity: 0;
+  width: 0;
+  top: 0;
+  bottom: 0;
   left: 0;
-
-  background: black;
+  background: rgba(0, 0, 0, 0.9);
   overflow: hidden;
   z-index: 200;
+  transition: all;
+  ${({ animateClose }) =>
+    animateClose
+      ? css`
+          animation: ${menuClose} 0.3s ease-out;
+        `
+      : css`
+          animation: ${menuOpen} 0.3s ease-out forwards;
+        `}
 `;
 
 const DesktopNav = styled.nav`
