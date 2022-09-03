@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styled, { css, keyframes } from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
 import { Logo, AllNavigation, AllIcon } from '../queries/dataQuery';
-import { FooterSection } from './Footer';
 
 export interface NavHeaderProps {
   navLinks: AllNavigation[];
@@ -29,7 +29,7 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
 }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
-  const [activeMobileMenu, setActiveMobileMenu] = useState<boolean>(false);
+  const [drawer, setDrawer] = useState<boolean>(false);
   const [mobileView, setMobileView] = useState<boolean>(false);
   const [animateClose, setAnimateClose] = useState<boolean>(false);
 
@@ -46,14 +46,14 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
     if (screenWidth <= 800) setMobileView(true);
     else {
       setMobileView(false);
-      setActiveMobileMenu(false);
+      setDrawer(false);
     }
   };
 
   const closeMenu: () => void = () => {
     setAnimateClose(!animateClose);
+    setDrawer(false);
     setTimeout(() => {
-      setActiveMobileMenu(false);
       setAnimateClose(false);
     }, 1000);
   };
@@ -66,14 +66,50 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
   return (
     <>
       <Header height={headerHeight} active={activeBackgroundColor}>
-        {mobileView ? (
-          <span onClick={() => setActiveMobileMenu(!activeMobileMenu)}>H</span>
-        ) : null}
-        {mobileView ? (
-          activeMobileMenu ? (
-            <MobileMenu animateClose={animateClose}>
-              <span onClick={closeMenu}>C</span>
-              <MobileNav>
+        {mobileView ? <span onClick={() => setDrawer(!drawer)}>H</span> : null}
+        <AnimatePresence>
+          {mobileView ? (
+            drawer ? (
+              <MobileMenu
+                animateClose={animateClose}
+                initial={{ opacity: 0, margin: '-100%' }}
+                animate={{ opacity: 1, margin: 0 }}
+                exit={{ opacity: 0, margin: '-100%' }}
+                transition={{
+                  delay: 0.1,
+                  stiffness: 100,
+                }}
+              >
+                <span onClick={() => setDrawer(!drawer)}>C</span>
+                <MobileNav>
+                  {navLinks.map((navLink, index) => (
+                    <motion.a
+                      key={index}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        delay: index * 0.6,
+                        duration: 0.2,
+                      }}
+                      onClick={() => setDrawer(!drawer)}
+                    >
+                      <NavLink link={navLink.link} text={navLink.text} />
+                    </motion.a>
+                  ))}
+                </MobileNav>
+              </MobileMenu>
+            ) : null
+          ) : (
+            <DesktopMenu>
+              <Link href={logoData.href}>
+                <Image
+                  src={logoData.image.url}
+                  alt={logoData.image.alt}
+                  width={logoData.size}
+                  height={logoData.size}
+                />
+              </Link>
+              <DesktopNav>
                 {navLinks.map((navLink, index) => (
                   <NavLink
                     key={index}
@@ -81,27 +117,10 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
                     text={navLink.text}
                   />
                 ))}
-              </MobileNav>
-              <FooterSection iconData={iconData} />
-            </MobileMenu>
-          ) : null
-        ) : (
-          <DesktopMenu>
-            <Link href={logoData.href}>
-              <Image
-                src={logoData.image.url}
-                alt={logoData.image.alt}
-                width={logoData.size}
-                height={logoData.size}
-              />
-            </Link>
-            <DesktopNav>
-              {navLinks.map((navLink, index) => (
-                <NavLink key={index} link={navLink.link} text={navLink.text} />
-              ))}
-            </DesktopNav>
-          </DesktopMenu>
-        )}
+              </DesktopNav>
+            </DesktopMenu>
+          )}
+        </AnimatePresence>
       </Header>
     </>
   );
@@ -164,29 +183,20 @@ const DesktopMenu = styled.div`
   padding: 0 10rem;
 `;
 
-const MobileMenu = styled.aside<StyledMobileMenu>`
+const MobileMenu = styled(motion.aside)<StyledMobileMenu>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  opacity: 0;
-  width: 0;
+  width: 100vw;
   top: 0;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.9);
   overflow: hidden;
   z-index: 200;
   transition: all;
-  ${({ animateClose }) =>
-    animateClose
-      ? css`
-          animation: ${menuClose} 0.3s ease-out;
-        `
-      : css`
-          animation: ${menuOpen} 0.3s ease-out forwards;
-        `}
 `;
 
 const DesktopNav = styled.nav`
