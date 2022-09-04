@@ -29,7 +29,14 @@ export const StyledArticle = styled.article`
     padding: 2rem 4rem 1rem 4rem;
     flex-direction: column;
     &#oldBuildings {
-      flex-direction: row;
+      flex-direction: column-reverse;
+    }
+  }
+  @media (max-width: 800px) {
+    padding: 2rem 2rem 1rem 2rem;
+    flex-direction: column;
+    &#oldBuildings {
+      flex-direction: column-reverse;
     }
   }
 `;

@@ -58,6 +58,9 @@ const InformationSection = styled.section`
   flex-direction: column;
   align-items: start;
   justify-content: center;
+  @media (max-width: 1300px) {
+    max-width: 650px;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -85,7 +88,7 @@ const LinkButton = styled.a`
   transition-property: background-color, border-color;
   transition: 0.1s ease-out;
   cursor: pointer;
-  &:hover {
+  &:hashover {
     border-color: #f0f0f0;
     background-color: #d9d9d9;
     color: #2a2a2a;

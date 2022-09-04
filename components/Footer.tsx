@@ -2,19 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { IconLink } from './IconLink';
-import { AllIcon } from '../queries/dataQuery';
+import { AllFooter } from '../queries/dataQuery';
 
 interface FooterSectionProps {
-  iconData: AllIcon[];
+  footerData: AllFooter[];
 }
 
-export const FooterSection: React.FC<FooterSectionProps> = ({ iconData }) => {
+export const FooterSection: React.FC<FooterSectionProps> = ({ footerData }) => {
   const date = new Date();
 
   return (
     <Footer>
       <IconContainer>
-        {iconData.map((icon, index) => (
+        {footerData.map((icon, index) => (
           <span key={index}>
             <IconLink
               src={icon.image.url}
@@ -25,12 +25,10 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ iconData }) => {
           </span>
         ))}
       </IconContainer>
-      <CopyrightContainer>
-        <p>
-          Copyright &copy; | {date.getFullYear()} - Nicklas Holmqvist - All
-          rights reserved
-        </p>
-      </CopyrightContainer>
+      <p>
+        Copyright &copy; | {date.getFullYear()} - Nicklas Holmqvist - All rights
+        reserved
+      </p>
     </Footer>
   );
 };
@@ -42,17 +40,14 @@ const Footer = styled.footer`
   flex-direction: column;
   padding-bottom: 1rem;
   margin: auto;
+  p {
+    text-align: center;
+  }
 `;
 
 const IconContainer = styled.div`
   padding-bottom: 0.5rem;
   span {
     padding: 0rem 0.5rem;
-  }
-`;
-
-const CopyrightContainer = styled.div`
-  p {
-    text-align: center;
   }
 `;

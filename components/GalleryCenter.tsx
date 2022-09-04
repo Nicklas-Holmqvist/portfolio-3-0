@@ -48,6 +48,11 @@ const ImageSection = styled.section`
   display: flex;
   justify-content: center;
   padding-left: 2rem;
+  @media (max-width: 1100px) {
+    justify-content: start;
+    padding-left: 0;
+    padding-bottom: 2rem;
+  }
 `;
 
 const InformationSection = styled.section`
@@ -55,6 +60,9 @@ const InformationSection = styled.section`
   flex: 1;
   display: flex;
   justify-content: center;
+  @media (max-width: 1100px) {
+    justify-content: start;
+  }
 `;
 
 const InformationContainer = styled.div`
@@ -64,6 +72,12 @@ const InformationContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  @media (max-width: 1300px) {
+    max-width: 650px;
+  }
+  @media (max-width: 800px) {
+    max-width: 650px;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -79,7 +93,7 @@ const LinkButton = styled.a`
   transition-property: background-color, border-color;
   transition: 0.1s ease-out;
   cursor: pointer;
-  &:hover {
+  &:hashover {
     border-color: #f0f0f0;
     background-color: #d9d9d9;
     color: #2a2a2a;
