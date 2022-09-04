@@ -4,8 +4,8 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import { Section } from '../queries/dataQuery';
-import { StructuredText } from 'react-datocms';
 import { StyledArticle } from './StyledArticle';
+import { StructuredText } from 'react-datocms';
 
 interface GalleryCenterProps {
   data: Section;

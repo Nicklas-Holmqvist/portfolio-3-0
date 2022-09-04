@@ -6,7 +6,6 @@ export const Hero = () => {
     <HeroSection
       role="contentinfo"
       aria-label="Bakgrundsbild för startsidan"
-      id="top"
     ></HeroSection>
   );
 };

@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import styled from 'styled-components';
-import { AllIcon } from '../queries/dataQuery';
+
 import { Icon } from './Icon';
+import { AllIcon } from '../queries/dataQuery';
 
 interface ToTopProps {
   iconData: AllIcon[];

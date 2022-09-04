@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import { Hero } from './Hero';
 import { About } from './About';
-import { AllIcon, Section } from '../queries/dataQuery';
+import { ToTop } from './ToTop';
 import { GalleryCenter } from './GalleryCenter';
 import { ProjectSection } from './ProjectSection';
 import { GalleryStandard } from './GalleryStandard';
-import { ToTop } from './ToTop';
+import { AllIcon, Section } from '../queries/dataQuery';
 export interface Layout {
   sectionData: Section[];
   iconData: AllIcon[];

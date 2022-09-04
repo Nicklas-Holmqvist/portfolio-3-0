@@ -1,9 +1,9 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
-import { request } from '../lib/datocms';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 
 import { Layout } from '../components/Layout';
+import { request } from '../lib/datocms';
 import { NavHeader } from '../components/NavHeader';
 import { FooterSection } from '../components/Footer';
 import { dataQuery, DataQuery } from '../queries/dataQuery';
