@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
 import { Logo, AllNavigation, AllIcon } from '../queries/dataQuery';
+import { HamburgerButton } from './HamburgerButton';
 
 export interface NavHeaderProps {
   navLinks: AllNavigation[];
@@ -66,7 +67,9 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
   return (
     <>
       <Header height={headerHeight} active={activeBackgroundColor}>
-        {mobileView ? <span onClick={() => setDrawer(!drawer)}>H</span> : null}
+        {mobileView ? (
+          <HamburgerButton onClick={() => setDrawer(!drawer)} />
+        ) : null}
         <AnimatePresence>
           {mobileView ? (
             drawer ? (
@@ -80,7 +83,6 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
                   stiffness: 100,
                 }}
               >
-                <span onClick={() => setDrawer(!drawer)}>C</span>
                 <MobileNav>
                   {navLinks.map((navLink, index) => (
                     <motion.a
@@ -88,8 +90,8 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{
-                        delay: index * 0.6,
-                        duration: 0.2,
+                        delay: index * 0.4,
+                        duration: 0.1,
                       }}
                       onClick={() => setDrawer(!drawer)}
                     >
