@@ -1,6 +1,7 @@
 export interface DataQuery {
   allSections: Section[];
   allHeads: AllHeads;
+  allFooters: AllFooter[];
   allIcons: AllIcon[];
   allNavigations: AllNavigation[];
   hero: Hero;
@@ -39,6 +40,16 @@ export interface AllHeads {
   metaContent: string;
 }
 
+export interface AllFooter {
+  image: {
+    url: string;
+    alt: string;
+  };
+  title: string;
+  hasHover: boolean;
+  size: number;
+  href: string;
+}
 export interface AllIcon {
   image: {
     url: string;
@@ -101,6 +112,16 @@ export const dataQuery = `query allData {
     title
     metaName
     metaContent
+  }
+  allFooters(orderBy: order_ASC) {
+    image {
+      url
+      alt
+    }
+    size
+    href
+    hasHover
+    title
   }
   allIcons(orderBy: order_ASC) {
     image {

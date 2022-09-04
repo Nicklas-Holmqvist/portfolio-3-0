@@ -24,7 +24,7 @@ const StyledHamburgerButton = styled.button<StyledHamburgerButtonProps>`
   margin: 0;
   padding: 0;
   position: fixed;
-  left: 1.2rem;
+  left: 2rem;
   top: 1.2rem;
   width: 2rem;
   height: 1.8rem;
@@ -38,11 +38,9 @@ const StyledHamburgerButton = styled.button<StyledHamburgerButtonProps>`
       &:hover span {        
         &:nth-child(2) {
           width: 100%;
-          padding:1px;
         }
         &:nth-child(3) {
           width: 100%;
-          padding:1px;
         }
       }
         }

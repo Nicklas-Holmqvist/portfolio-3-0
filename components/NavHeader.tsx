@@ -5,13 +5,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
-import { Logo, AllNavigation, AllIcon } from '../queries/dataQuery';
 import { HamburgerButton } from './HamburgerButton';
+import { Logo, AllNavigation, AllIcon } from '../queries/dataQuery';
 
 export interface NavHeaderProps {
   navLinks: AllNavigation[];
   logoData: Logo;
-  iconData: AllIcon[];
 }
 
 export interface StyledHeaderProps {
@@ -19,16 +18,11 @@ export interface StyledHeaderProps {
   active: boolean;
 }
 
-interface StyledMobileMenu {
-  animateClose: boolean;
-}
-
 export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
   const [mobileView, setMobileView] = useState<boolean>(false);
-  const [animateClose, setAnimateClose] = useState<boolean>(false);
 
   const headerHeight: number = 70;
 
@@ -39,20 +33,12 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
   };
 
   const changeMobileView: () => void = () => {
-    const screenWidth = window.visualViewport.width;
+    const screenWidth = window.innerWidth;
     if (screenWidth <= 800) setMobileView(true);
     else {
       setMobileView(false);
       setDrawer(false);
     }
-  };
-
-  const closeMenu: () => void = () => {
-    setAnimateClose(!animateClose);
-    setDrawer(false);
-    setTimeout(() => {
-      setAnimateClose(false);
-    }, 1000);
   };
 
   useEffect(() => {
@@ -70,7 +56,6 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
           {mobileView ? (
             drawer ? (
               <MobileMenu
-                animateClose={animateClose}
                 initial={{ opacity: 0, margin: '-100%' }}
                 animate={{ opacity: 1, margin: 0 }}
                 exit={{ opacity: 0, margin: '-100%' }}
@@ -124,28 +109,6 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
   );
 };
 
-const menuOpen = keyframes`
-from {
-  opacity: 0;
-  width: 0%;
-}
-to {
-  opacity: 1;
-  width: 100%;
-}
-`;
-
-const menuClose = keyframes`
-from {
-  opacity: 1;
-  width: 100%;
-}
-to {
-  opacity: 0;
-  width: 0%;
-}
-`;
-
 const Header = styled.header<StyledHeaderProps>`
   box-sizing: border-box;
   position: fixed;
@@ -161,15 +124,6 @@ const Header = styled.header<StyledHeaderProps>`
           background-color: none;
         `}
   transition: all 0.5s;
-  @media (max-width: 1500px) {
-    padding: 0 5rem;
-  }
-  @media (max-width: 1300px) {
-    padding: 0 2rem;
-  }
-  @media (max-width: 1100px) {
-    padding: 0 4rem;
-  }
 `;
 
 const DesktopMenu = styled.div`
@@ -179,9 +133,21 @@ const DesktopMenu = styled.div`
   height: 100%;
   max-width: 1900px;
   padding: 0 10rem;
+  @media (max-width: 1500px) {
+    padding: 0 5rem;
+  }
+  @media (max-width: 1300px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 1100px) {
+    padding: 0 4rem;
+  }
+  @media (max-width: 800px) {
+    padding: 0 2rem;
+  }
 `;
 
-const MobileMenu = styled(motion.aside)<StyledMobileMenu>`
+const MobileMenu = styled(motion.aside)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -191,7 +157,7 @@ const MobileMenu = styled(motion.aside)<StyledMobileMenu>`
   top: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: #2a2a2a;
   overflow: hidden;
   z-index: 200;
   transition: all;
