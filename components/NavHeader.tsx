@@ -23,11 +23,7 @@ interface StyledMobileMenu {
   animateClose: boolean;
 }
 
-export const NavHeader: React.FC<NavHeaderProps> = ({
-  navLinks,
-  logoData,
-  iconData,
-}) => {
+export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
@@ -68,7 +64,7 @@ export const NavHeader: React.FC<NavHeaderProps> = ({
     <>
       <Header height={headerHeight} active={activeBackgroundColor}>
         {mobileView ? (
-          <HamburgerButton onClick={() => setDrawer(!drawer)} />
+          <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
         ) : null}
         <AnimatePresence>
           {mobileView ? (
@@ -216,7 +212,8 @@ const MobileNav = styled.nav`
   align-items: center;
   height: 20rem;
   a {
-    padding: 2rem 0;
+    margin: 1.8rem 0;
+    padding-bottom: 0.5rem;
     font-size: 3rem;
   }
 `;
