@@ -133,6 +133,7 @@ const DesktopMenu = styled.div`
   height: 100%;
   max-width: 1900px;
   padding: 0 10rem;
+  margin: auto;
   @media (max-width: 1500px) {
     padding: 0 5rem;
   }
