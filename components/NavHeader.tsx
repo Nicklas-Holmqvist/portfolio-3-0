@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
 import { HamburgerButton } from './HamburgerButton';
-import { Logo, AllNavigation, AllIcon } from '../queries/dataQuery';
+import { Logo, AllNavigation } from '../queries/dataQuery';
 
 export interface NavHeaderProps {
   navLinks: AllNavigation[];
@@ -23,7 +23,6 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
   const [mobileView, setMobileView] = useState<boolean>(false);
-
   const headerHeight: number = 70;
 
   const changeBackgroundColor: () => void = () => {
@@ -32,9 +31,9 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
       : setActiveBackgroundColor(false);
   };
 
-  const changeMobileView: () => void = () => {
-    const screenWidth = window.innerWidth;
-    if (screenWidth <= 800) setMobileView(true);
+  const changeMobileView = () => {
+    const innerWidth = window.innerWidth;
+    if (innerWidth <= 800) setMobileView(true);
     else {
       setMobileView(false);
       setDrawer(false);
@@ -45,6 +44,10 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
     window.addEventListener('scroll', changeBackgroundColor);
     window.addEventListener('resize', changeMobileView);
   });
+
+  useEffect(() => {
+    changeMobileView();
+  }, []);
 
   return (
     <>
