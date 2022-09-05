@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
