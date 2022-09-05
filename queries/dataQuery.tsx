@@ -9,6 +9,7 @@ export interface DataQuery {
 }
 
 export interface Section {
+  length: number;
   titleFirst: string;
   subTitle: string;
   contentFirst: {
