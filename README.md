@@ -21,7 +21,7 @@ I wanted to create a more storybased content from start to end. More information
 - Figma
 
 ## Progress
-220905 - Bug in code that doesn't read the styled-components css.
+220905 - Bug in code that doesn't read the styled-components css. HTML load before styling
 
 ## Design and Figma
 
