@@ -20,6 +20,9 @@ I wanted to create a more storybased content from start to end. More information
 - GraphQL
 - Figma
 
+## Progress
+220905 - Bug in code that doesn't read the styled-components css.
+
 ## Design and Figma
 
 Google fonts: 
