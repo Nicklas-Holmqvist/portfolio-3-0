@@ -21,7 +21,8 @@ I wanted to create a more storybased content from start to end. More information
 - Figma
 
 ## Progress
-220905 - Bug in code that doesn't read the styled-components css. HTML load before styling
+220905 - Bug in code that doesn't read the styled-components css. HTML load before styling - FIXED
+Solution: [NextJS with styled component _document](https://github.com/vercel/next.js/blob/deprecated-main/examples/with-styled-components/pages/_document.js)
 
 ## Design and Figma
 
