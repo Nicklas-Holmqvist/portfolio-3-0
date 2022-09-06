@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
 
 import { ImageGallery, Section } from '../queries/dataQuery';
+import { StyledArticle } from './StyledArticle';
 
 interface GalleryProps {
   galleryData: Section[];
@@ -25,17 +26,18 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
     galleryArray.push(item.responsiveImage);
   });
 
-  console.log(galleryArray);
-
   return (
     <StyledGalleryContainer>
       <h2>{data.title}</h2>
-      <PhotoAlbum layout="rows" photos={galleryArray} />
+      <PhotoAlbum
+        layout="rows"
+        photos={galleryArray}
+        onClick={(event) => console.log(event)}
+      />
     </StyledGalleryContainer>
   );
 };
 
-const StyledGalleryContainer = styled.article`
-  text-align: center;
-  padding: 70px 0 2rem 0;
+const StyledGalleryContainer = styled(StyledArticle)`
+  flex-direction: column;
 `;
