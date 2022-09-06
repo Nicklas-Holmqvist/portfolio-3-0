@@ -86,16 +86,18 @@ export interface Logo {
 
 export interface ImageGallery {
   title: string;
-  imageSet: {
-    responsiveImage: {
-      title: string;
-      src: string;
-      srcSet: string;
-      width: number;
-      height: number;
-      alt: string;
-    };
-  }[];
+  imageSet: ResponsiveImage[];
+}
+
+export interface ResponsiveImage {
+  responsiveImage: {
+    title: string;
+    src: string;
+    srcSet: string;
+    width: number;
+    height: number;
+    alt: string;
+  };
 }
 
 export const dataQuery = `query allData {

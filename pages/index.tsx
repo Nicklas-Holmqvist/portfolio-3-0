@@ -22,7 +22,6 @@ export const getStaticProps: GetStaticProps<{
 const Home: NextPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(data);
   return (
     <>
       <GlobalStyles />
