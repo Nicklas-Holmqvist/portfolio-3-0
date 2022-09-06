@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Section } from '../queries/dataQuery';
 import { StyledArticle } from './StyledArticle';
 import { StructuredText } from 'react-datocms';
+import router from 'next/router';
 
 interface GalleryStandardSectionProps {
   data: Section;
@@ -35,7 +36,13 @@ export const GalleryStandardSection: React.FC<GalleryStandardSectionProps> = ({
         <h2>{data.titleFirst}</h2>
         <StructuredText data={data.contentFirst} />
         <Link href={data.galleryButtonLink}>
-          <LinkButton>{data.galleryButtonText}</LinkButton>
+          <LinkButton
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
+          >
+            {data.galleryButtonText}
+          </LinkButton>
         </Link>
       </InformationSection>
     </StyledArticle>
@@ -90,7 +97,7 @@ const LinkButton = styled.a`
   transition-property: background-color, border-color;
   transition: 0.1s ease-out;
   cursor: pointer;
-  &:hashover {
+  &:hover {
     border-color: #f0f0f0;
     background-color: #d9d9d9;
     color: #2a2a2a;
