@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Section } from '../queries/dataQuery';
+import { ImageGallery, Section } from '../queries/dataQuery';
 
 interface GalleryProps {
   galleryData: Section[];
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
+  const images: ImageGallery = galleryData[0].imageGallery;
   return (
     <StyledGalleryContainer>
-      <h2>{galleryData[0].titleFirst}</h2>
+      <h2>{images.title}</h2>
     </StyledGalleryContainer>
   );
 };

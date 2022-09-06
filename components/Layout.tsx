@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 import { Hero } from './Hero';
 import { About } from './About';
 import { ToTop } from './ToTop';
-import { GalleryCenterSection } from './GalleryCenterSection';
-import { ProjectSection } from './ProjectSection';
-import { GalleryStandardSection } from './GalleryStandardSection';
-import { AllIcon, Section } from '../queries/dataQuery';
 import { Gallery } from './Gallery';
+import { ProjectSection } from './ProjectSection';
+import { AllIcon, Section } from '../queries/dataQuery';
+import { GalleryCenterSection } from './GalleryCenterSection';
+import { GalleryStandardSection } from './GalleryStandardSection';
 export interface Layout {
   sectionData: Section[];
   iconData: AllIcon[];
