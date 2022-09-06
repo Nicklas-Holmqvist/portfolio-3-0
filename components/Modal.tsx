@@ -20,8 +20,8 @@ interface ModalProps {
 export const Modal: React.FC<ModalProps> = ({ image, prev, next, close }) => {
   return (
     <StyledModal>
-      <button onClick={close}>CLOSE</button>
-      <button onClick={prev}>PREV</button>
+      <StyledCloseButton onClick={close}>CLOSE</StyledCloseButton>
+      <StyledPrevButton onClick={prev}>PREV</StyledPrevButton>
       <StyledImageContainer>
         <Image
           src={image.src}
@@ -30,7 +30,7 @@ export const Modal: React.FC<ModalProps> = ({ image, prev, next, close }) => {
           objectFit="contain"
         />
       </StyledImageContainer>
-      <button onClick={next}>NEXT</button>
+      <StyledNextButton onClick={next}>NEXT</StyledNextButton>
     </StyledModal>
   );
 };
@@ -53,4 +53,22 @@ const StyledImageContainer = styled.div`
   position: relative;
   height: 80%;
   margin-top: 5%;
+`;
+
+const StyledCloseButton = styled.button`
+  position: fixed;
+  top: 2%;
+  right: 2%;
+`;
+
+const StyledPrevButton = styled.button`
+  position: fixed;
+  left: 2%;
+  top: 50%;
+`;
+
+const StyledNextButton = styled.button`
+  position: fixed;
+  right: 2%;
+  top: 50%;
 `;
