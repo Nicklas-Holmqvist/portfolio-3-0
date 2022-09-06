@@ -7,17 +7,28 @@ import { Section } from '../queries/dataQuery';
 import { StyledArticle } from './StyledArticle';
 import { StructuredText } from 'react-datocms';
 
-interface GalleryStandardProps {
+interface GalleryCenterSectionProps {
   data: Section;
 }
 
-export const GalleryStandard: React.FC<GalleryStandardProps> = ({ data }) => {
+export const GalleryCenterSection: React.FC<GalleryCenterSectionProps> = ({
+  data,
+}) => {
   return (
     <StyledArticle
       role={data.ariaRole}
       aria-label={data.ariaLabel}
       id={data.sectionId}
     >
+      <InformationSection>
+        <InformationContainer>
+          <h2>{data.titleFirst}</h2>
+          <StructuredText data={data.contentFirst} />
+          <Link href={data.galleryButtonLink}>
+            <LinkButton>{data.galleryButtonText}</LinkButton>
+          </Link>
+        </InformationContainer>
+      </InformationSection>
       <ImageSection>
         <ImageContainer>
           <Image
@@ -29,58 +40,54 @@ export const GalleryStandard: React.FC<GalleryStandardProps> = ({ data }) => {
           <p>{data.imageSubText}</p>
         </ImageContainer>
       </ImageSection>
-      <InformationSection>
-        <h2>{data.titleFirst}</h2>
-        <StructuredText data={data.contentFirst} />
-        <Link href={data.galleryButtonLink}>
-          <LinkButton>{data.galleryButtonText}</LinkButton>
-        </Link>
-      </InformationSection>
     </StyledArticle>
   );
 };
 
 const ImageSection = styled.section`
-  box-sizing: border-box;
-  max-width: 1000px;
-  width: 100%;
+  flex: 1;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: start;
   justify-content: center;
+  padding-left: 2rem;
+  @media (max-width: 1100px) {
+    justify-content: start;
+    padding-left: 0;
+    padding-bottom: 2rem;
+  }
 `;
 
 const InformationSection = styled.section`
-  box-sizing: border-box;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 1100px) {
+    justify-content: start;
+  }
+`;
+
+const InformationContainer = styled.div`
   max-width: 475px;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: start;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   @media (max-width: 1300px) {
+    max-width: 650px;
+  }
+  @media (max-width: 800px) {
     max-width: 650px;
   }
 `;
 
 const ImageContainer = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  padding-right: 3rem;
-  @media (max-width: 1300px) {
-    padding-right: 2rem;
-    padding-bottom: 2rem;
-  }
-  @media (max-width: 1100px) {
-    padding-right: 0rem;
-    padding-bottom: 2rem;
-  }
+  width: 560px;
 `;
 
 const LinkButton = styled.a`
+  width: 5rem;
   margin-top: 2rem;
   padding: 0.4rem 1.1rem 0.5rem 1.1rem;
   border: 2px solid #d9d9d9;
