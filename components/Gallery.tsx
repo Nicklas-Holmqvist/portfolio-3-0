@@ -1,13 +1,8 @@
-import React, {
-  BaseSyntheticEvent,
-  ReactEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import React, { BaseSyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
-import PhotoAlbum, { ClickHandler } from 'react-photo-album';
+import PhotoAlbum from 'react-photo-album';
 
-import { ImageGallery, ResponsiveImage, Section } from '../queries/dataQuery';
+import { ImageGallery, Section } from '../queries/dataQuery';
 import { StyledArticle } from './StyledArticle';
 import { Modal } from './Modal';
 
@@ -48,7 +43,7 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
   };
 
   const nextImage = () => {
-    if (activeImage >= gallery.length) return;
+    if (activeImage >= gallery.length - 1) return;
     else setActiveImage(activeImage + 1);
   };
 
