@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { Section } from '../queries/dataQuery';
 import { StyledArticle } from './StyledArticle';
 import { StructuredText } from 'react-datocms';
-import router from 'next/router';
 
 interface GalleryCenterSectionProps {
   data: Section;

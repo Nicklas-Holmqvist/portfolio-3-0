@@ -10,6 +10,7 @@ import { ProjectSection } from './ProjectSection';
 import { AllIcon, Section } from '../queries/dataQuery';
 import { GalleryCenterSection } from './GalleryCenterSection';
 import { GalleryStandardSection } from './GalleryStandardSection';
+import { motion } from 'framer-motion';
 export interface Layout {
   sectionData: Section[];
   iconData: AllIcon[];
@@ -39,8 +40,6 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
     window.scrollY >= 200 ? setShowToTop(true) : setShowToTop(false);
   };
 
-  const toggleGallery = () => {};
-
   useEffect(() => {
     window.addEventListener('scroll', toggleShowToTop);
   });
@@ -52,7 +51,11 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
   }, [activeGallery, findGallery, sectionData]);
 
   return (
-    <Main>
+    <Main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+    >
       {showGallery && findGallery.length !== 0 ? (
         <Gallery galleryData={findGallery} />
       ) : (
@@ -69,4 +72,4 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
     </Main>
   );
 };
-const Main = styled.main``;
+const Main = styled(motion.main)``;

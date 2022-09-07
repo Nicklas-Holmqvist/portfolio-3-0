@@ -1,10 +1,12 @@
-import React, { BaseSyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
+import React, { BaseSyntheticEvent, useState } from 'react';
 
-import { ImageGallery, Section } from '../queries/dataQuery';
-import { StyledArticle } from './StyledArticle';
 import { Modal } from './Modal';
+import { motion } from 'framer-motion';
+import { SimpleLink } from './SimpleLink';
+import { StyledArticle } from './StyledArticle';
+import { ImageGallery, Section } from '../queries/dataQuery';
 
 interface GalleryProps {
   galleryData: Section[];
@@ -52,7 +54,13 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
   };
 
   return (
-    <StyledGalleryContainer>
+    <StyledGalleryContainer
+      key="gallery"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.7 }}
+    >
       {activeModal ? (
         <Modal
           image={gallery[activeImage]}
@@ -61,12 +69,12 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
           close={closeModal}
         />
       ) : null}
-      <h2>{data.title}</h2>
+      <SimpleLink href={'/'} text={'Gå tillbaka'} />
       <PhotoAlbum layout="rows" photos={gallery} onClick={openModal} />
     </StyledGalleryContainer>
   );
 };
 
-const StyledGalleryContainer = styled(StyledArticle)`
+const StyledGalleryContainer = styled(motion(StyledArticle))`
   flex-direction: column;
 `;
