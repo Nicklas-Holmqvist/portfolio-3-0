@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
 import { Hero } from './Hero';
@@ -10,7 +11,6 @@ import { ProjectSection } from './ProjectSection';
 import { AllIcon, Section } from '../queries/dataQuery';
 import { GalleryCenterSection } from './GalleryCenterSection';
 import { GalleryStandardSection } from './GalleryStandardSection';
-import { motion } from 'framer-motion';
 export interface Layout {
   sectionData: Section[];
   iconData: AllIcon[];
@@ -57,7 +57,7 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
       transition={{ delay: 0.5 }}
     >
       {showGallery && findGallery.length !== 0 ? (
-        <Gallery galleryData={findGallery} />
+        <Gallery galleryData={findGallery} showToTop={showToTop} />
       ) : (
         <>
           <Hero />
@@ -66,7 +66,7 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
           <GalleryCenterSection data={sections.oldBuildings} />
           <GalleryStandardSection data={sections.details} />
           <About data={sections.about} />
-          {showToTop ? <ToTop iconData={iconData} /> : null}
+          {showToTop ? <ToTop /> : null}
         </>
       )}
     </Main>
