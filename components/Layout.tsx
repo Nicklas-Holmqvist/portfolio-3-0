@@ -57,7 +57,7 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
       transition={{ delay: 0.5 }}
     >
       {showGallery && findGallery.length !== 0 ? (
-        <Gallery galleryData={findGallery} />
+        <Gallery galleryData={findGallery} showToTop={showToTop} />
       ) : (
         <>
           <Hero />
@@ -66,7 +66,7 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
           <GalleryCenterSection data={sections.oldBuildings} />
           <GalleryStandardSection data={sections.details} />
           <About data={sections.about} />
-          {showToTop ? <ToTop iconData={iconData} /> : null}
+          {showToTop ? <ToTop /> : null}
         </>
       )}
     </Main>

@@ -3,14 +3,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Icon } from './Icon';
-import { AllIcon } from '../queries/dataQuery';
+import toTopIcon from '../assets/svg/arrow-up.svg';
 
-interface ToTopProps {
-  iconData: AllIcon[];
-}
+interface ToTopProps {}
 
-export const ToTop: React.FC<ToTopProps> = ({ iconData }) => {
-  const toTopIcon = iconData.filter((icon) => icon.title === 'Arrow up');
+export const ToTop: React.FC<ToTopProps> = () => {
   return (
     <StyledToTop
       initial={{ opacity: 0, x: 50 }}
@@ -18,12 +15,7 @@ export const ToTop: React.FC<ToTopProps> = ({ iconData }) => {
       whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
       onClick={() => window.scrollTo(0, 0)}
     >
-      <Icon
-        src={toTopIcon[0].image.url}
-        alt={toTopIcon[0].image.alt}
-        hasHover={false}
-        size={toTopIcon[0].size}
-      />
+      <Icon src={toTopIcon} alt={'gå upp'} hasHover={false} size={40} />
     </StyledToTop>
   );
 };

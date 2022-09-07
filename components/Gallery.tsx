@@ -6,13 +6,15 @@ import { Modal } from './Modal';
 import { motion } from 'framer-motion';
 import { SimpleLink } from './SimpleLink';
 import { StyledArticle } from './StyledArticle';
-import { ImageGallery, Section } from '../queries/dataQuery';
+import { AllIcon, ImageGallery, Section } from '../queries/dataQuery';
+import { ToTop } from './ToTop';
 
 interface GalleryProps {
   galleryData: Section[];
+  showToTop: boolean;
 }
 
-export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
+export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
   const data: ImageGallery = galleryData[0].imageGallery;
 
   const [activeModal, setActiveModal] = useState<boolean>(false);
@@ -71,6 +73,7 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData }) => {
       ) : null}
       <SimpleLink href={'/'} text={'Gå tillbaka'} />
       <PhotoAlbum layout="rows" photos={gallery} onClick={openModal} />
+      {showToTop ? <ToTop /> : null}
     </StyledGalleryContainer>
   );
 };
