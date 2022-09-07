@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
+import { motion } from 'framer-motion';
 import React, { BaseSyntheticEvent, useState } from 'react';
 
 import { Modal } from './Modal';
-import { motion } from 'framer-motion';
+import { ToTop } from './ToTop';
 import { SimpleLink } from './SimpleLink';
 import { StyledArticle } from './StyledArticle';
-import { AllIcon, ImageGallery, Section } from '../queries/dataQuery';
-import { ToTop } from './ToTop';
+import { ImageGallery, Section } from '../queries/dataQuery';
 
 interface GalleryProps {
   galleryData: Section[];
