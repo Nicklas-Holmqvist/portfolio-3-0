@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
 import { motion } from 'framer-motion';
-import React, { BaseSyntheticEvent, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 
 import { Modal } from './Modal';
 import { ToTop } from './ToTop';
-import { SimpleLink } from './SimpleLink';
 import { StyledArticle } from './StyledArticle';
 import { ImageGallery, Section } from '../queries/dataQuery';
 
@@ -19,6 +18,7 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
 
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [activeImage, setActiveImage] = useState<number>(0);
+  const [disabledModal, setDisabledModal] = useState<boolean>(false);
 
   const gallery: {
     title: string;
@@ -55,6 +55,18 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
     setActiveModal(false);
   };
 
+  const disableModal = () => {
+    const innerWidth = window.innerWidth;
+    if (innerWidth <= 800) {
+      setDisabledModal(true);
+      setActiveModal(false);
+    } else setDisabledModal(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', disableModal);
+  });
+
   return (
     <StyledGalleryContainer
       key="gallery"
@@ -63,7 +75,7 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.7 }}
     >
-      {activeModal ? (
+      {activeModal && !disabledModal ? (
         <Modal
           image={gallery[activeImage]}
           prev={prevImage}
@@ -71,8 +83,17 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
           close={closeModal}
         />
       ) : null}
-      <SimpleLink href={'/'} text={'Gå tillbaka'} />
-      <PhotoAlbum layout="rows" photos={gallery} onClick={openModal} />
+      <PhotoAlbum
+        layout="masonry"
+        photos={gallery}
+        onClick={!disabledModal ? openModal : undefined}
+        columns={(containerWidth) => {
+          if (containerWidth < 500) return 1;
+          if (containerWidth < 1100) return 2;
+          return 4;
+        }}
+        spacing={5}
+      />
       {showToTop ? <ToTop /> : null}
     </StyledGalleryContainer>
   );
@@ -80,4 +101,13 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
 
 const StyledGalleryContainer = styled(motion(StyledArticle))`
   flex-direction: column;
+  @media (max-width: 1500px) {
+    padding-top: 5rem;
+  }
+  @media (max-width: 1300px) {
+    padding-top: 5rem;
+  }
+  @media (max-width: 800px) {
+    padding: 5rem 0 2rem 0;
+  }
 `;

@@ -108,16 +108,25 @@ const StyledButton = styled.button`
 const StyledCloseButton = styled(StyledButton)`
   top: 1%;
   right: 5%;
+  @media (max-width: 1300px) {
+    right: 2%;
+  }
 `;
 
 const StyledPrevButton = styled(StyledButton)`
   left: 5%;
   top: 40%;
   padding: 0.2rem 0.3rem 0 0;
+  @media (max-width: 1300px) {
+    left: 2%;
+  }
 `;
 
 const StyledNextButton = styled(StyledButton)`
   right: 5%;
   top: 40%;
   padding: 0.2rem 0 0 0.3rem;
+  @media (max-width: 1300px) {
+    right: 2%;
+  }
 `;
