@@ -1,4 +1,5 @@
 # Nicklasfoto 3.0
+In development
 
 ## Goal
 Create with as much semantic html and accessability I can. It will not be perfect but one step in the right way.
