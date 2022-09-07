@@ -78,6 +78,9 @@ p {
 a {
   margin: 0px;
   font-family: 'Lato', sans-serif;
+  text-decoration: none;
+  color: #f0f0f0;
+  cursor: pointer;
 }
 ul {
   margin: 0;

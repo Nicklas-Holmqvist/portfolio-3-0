@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
@@ -51,68 +51,67 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
 
   return (
     <>
-      <Header height={headerHeight} active={activeBackgroundColor}>
+      <Header
+        height={headerHeight}
+        active={activeBackgroundColor}
+        initial={{ opacity: 0, y: -70 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         {mobileView ? (
           <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
         ) : null}
-        <AnimatePresence>
-          {mobileView ? (
-            drawer ? (
-              <MobileMenu
-                initial={{ opacity: 0, margin: '-100%' }}
-                animate={{ opacity: 1, margin: 0 }}
-                exit={{ opacity: 0, margin: '-100%' }}
-                transition={{
-                  delay: 0.1,
-                  stiffness: 100,
-                }}
-              >
-                <MobileNav>
-                  {navLinks.map((navLink, index) => (
-                    <motion.a
-                      key={index}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: index * 0.4,
-                        duration: 0.1,
-                      }}
-                      onClick={() => setDrawer(!drawer)}
-                    >
-                      <NavLink link={navLink.link} text={navLink.text} />
-                    </motion.a>
-                  ))}
-                </MobileNav>
-              </MobileMenu>
-            ) : null
-          ) : (
-            <DesktopMenu>
-              <Link href={logoData.href}>
-                <Image
-                  src={logoData.image.url}
-                  alt={logoData.image.alt}
-                  width={logoData.size}
-                  height={logoData.size}
-                />
-              </Link>
-              <DesktopNav>
+        {mobileView ? (
+          drawer ? (
+            <MobileMenu
+              initial={{ opacity: 0, margin: '-100%' }}
+              animate={{ opacity: 1, margin: 0 }}
+              exit={{ opacity: 0, margin: '-100%' }}
+              transition={{
+                delay: 0.1,
+                stiffness: 100,
+              }}
+            >
+              <MobileNav>
                 {navLinks.map((navLink, index) => (
-                  <NavLink
+                  <motion.a
                     key={index}
-                    link={navLink.link}
-                    text={navLink.text}
-                  />
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: index * 0.4,
+                      duration: 0.1,
+                    }}
+                    onClick={() => setDrawer(!drawer)}
+                  >
+                    <NavLink link={navLink.link} text={navLink.text} />
+                  </motion.a>
                 ))}
-              </DesktopNav>
-            </DesktopMenu>
-          )}
-        </AnimatePresence>
+              </MobileNav>
+            </MobileMenu>
+          ) : null
+        ) : (
+          <DesktopMenu>
+            <Link href={logoData.href}>
+              <Image
+                src={logoData.image.url}
+                alt={logoData.image.alt}
+                width={logoData.size}
+                height={logoData.size}
+              />
+            </Link>
+            <DesktopNav>
+              {navLinks.map((navLink, index) => (
+                <NavLink key={index} link={navLink.link} text={navLink.text} />
+              ))}
+            </DesktopNav>
+          </DesktopMenu>
+        )}
       </Header>
     </>
   );
 };
 
-const Header = styled.header<StyledHeaderProps>`
+const Header = styled(motion.header)<StyledHeaderProps>`
   box-sizing: border-box;
   position: fixed;
   width: 100%;

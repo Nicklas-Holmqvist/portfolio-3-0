@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import Image from 'next/image';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-import closeIcon from '../assets/svg/bi_x-circle.svg';
-import prevIcon from '../assets/svg/prev-arrow.svg';
 import nextIcon from '../assets/svg/next-arrow.svg';
+import prevIcon from '../assets/svg/prev-arrow.svg';
+import closeIcon from '../assets/svg/bi_x-circle.svg';
 import { Icon } from './Icon';
 
 interface ModalProps {
@@ -25,7 +26,12 @@ export const Modal: React.FC<ModalProps> = ({ image, prev, next, close }) => {
   return (
     <StyledModal>
       <StyledModalContainer>
-        <StyledImageContainer>
+        <StyledImageContainer
+          key={image.src}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, stiffness: 100 }}
+        >
           <Image
             src={image.src}
             alt={image.alt}
@@ -69,14 +75,14 @@ const StyledModal = styled.article`
   }
 `;
 
-const StyledModalContainer = styled.div`
+const StyledModalContainer = styled(motion.div)`
   position: relative;
   height: 100%;
   max-width: 1900px;
   width: 100%;
   margin: auto;
 `;
-const StyledImageContainer = styled.div`
+const StyledImageContainer = styled(motion.div)`
   position: relative;
   height: 80%;
   margin: 4rem 5rem 1rem 5rem;
