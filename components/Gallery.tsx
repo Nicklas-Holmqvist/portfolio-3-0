@@ -67,6 +67,10 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
     window.addEventListener('resize', disableModal);
   });
 
+  useEffect(() => {
+    disableModal();
+  }, []);
+
   return (
     <StyledGalleryContainer
       key="gallery"
