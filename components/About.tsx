@@ -36,11 +36,8 @@ export const About: React.FC<About> = ({ data }) => {
 };
 
 const ImageSection = styled.section`
-  box-sizing: border-box;
-  max-width: 475px;
   width: 100%;
   display: flex;
-  padding-bottom: 2rem;
   @media (max-width: 1300px) {
     padding-left: 2rem;
   }
@@ -64,12 +61,13 @@ const InformationSection = styled.section`
 `;
 
 const ImageContainer = styled.div`
-  max-width: 465px;
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: end;
+  justify-content: end;
+  align-items: center;
   @media (max-width: 1300px) {
-    align-items: center;
+    justify-content: start;
+    padding-bottom: 2rem;
   }
 `;

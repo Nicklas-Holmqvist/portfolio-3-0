@@ -71,7 +71,7 @@ h3 {
 p {
   margin: 0px;
   font-family: 'Lato', sans-serif;
-  line-height: 1.4rem;
+  line-height: 1.5rem;
   padding-bottom: 0.8rem;  
 }
 

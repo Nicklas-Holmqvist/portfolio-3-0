@@ -43,8 +43,7 @@ const ProjectInformation = styled.section`
     }
     p {
         max-width: 650px;
-        width: 100%;
-        line-height: 1.4rem;
+        width: 100%;        
         padding-bottom: 0.8rem;
     }
     @media (max-width: 1300px) {

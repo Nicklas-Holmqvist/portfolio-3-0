@@ -56,6 +56,9 @@ const ImageSection = styled.section`
   flex-direction: column;
   align-items: start;
   justify-content: center;
+  p {
+    padding-bottom: 0;
+  }
 `;
 
 const InformationSection = styled.section`
@@ -66,6 +69,7 @@ const InformationSection = styled.section`
   flex-direction: column;
   align-items: start;
   justify-content: center;
+  }
   @media (max-width: 1300px) {
     max-width: 650px;
   }
