@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
 import { Hero } from './Hero';
@@ -16,11 +16,13 @@ export interface Layout {
   iconData: AllIcon[];
 }
 
-export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
+export const Layout: React.FC<Layout> = ({ sectionData }) => {
   const activeGallery = useRouter();
   const findGallery = sectionData.filter((section) => {
     return section.galleryButtonLink === activeGallery.asPath;
   });
+
+  const motionKey = activeGallery.asPath.includes('gallery');
 
   const findSection = (sectionId: string) => {
     return sectionData.find((section) => section.sectionId === sectionId);
@@ -51,25 +53,35 @@ export const Layout: React.FC<Layout> = ({ sectionData, iconData }) => {
   }, [activeGallery, findGallery, sectionData]);
 
   return (
-    <Main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5 }}
-    >
-      {showGallery && findGallery.length !== 0 ? (
-        <Gallery galleryData={findGallery} showToTop={showToTop} />
-      ) : (
-        <>
-          <Hero />
-          <ProjectSection data={sections.project} />
-          <GalleryStandardSection data={sections.landscapes} />
-          <GalleryCenterSection data={sections.oldBuildings} />
-          <GalleryStandardSection data={sections.details} />
-          <About data={sections.about} />
-          {showToTop ? <ToTop /> : null}
-        </>
-      )}
-    </Main>
+    <AnimatePresence exitBeforeEnter>
+      <Main
+        variants={motionMain}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        {showGallery && findGallery.length !== 0 ? (
+          <Gallery galleryData={findGallery} showToTop={showToTop} />
+        ) : (
+          <>
+            <Hero />
+            <ProjectSection data={sections.project} />
+            <GalleryStandardSection data={sections.landscapes} />
+            <GalleryCenterSection data={sections.oldBuildings} />
+            <GalleryStandardSection data={sections.details} />
+            <About data={sections.about} />
+            {showToTop ? <ToTop /> : null}
+          </>
+        )}
+      </Main>
+    </AnimatePresence>
   );
 };
+
+const motionMain = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0 },
+};
+
 const Main = styled(motion.main)``;

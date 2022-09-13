@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 
 import { Modal } from './Modal';
@@ -16,7 +16,7 @@ interface GalleryProps {
 export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
   const data: ImageGallery = galleryData[0].imageGallery;
 
-  const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [activeImage, setActiveImage] = useState<number>(0);
   const [disabledModal, setDisabledModal] = useState<boolean>(false);
 
@@ -38,7 +38,7 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
       return image.src === currentImage;
     });
     setActiveImage(index);
-    setActiveModal(true);
+    setShowModal(true);
   };
 
   const prevImage = () => {
@@ -52,19 +52,20 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
   };
 
   const closeModal = () => {
-    setActiveModal(false);
+    setShowModal(false);
   };
 
   const disableModal = () => {
     const innerWidth = window.innerWidth;
     if (innerWidth <= 800) {
       setDisabledModal(true);
-      setActiveModal(false);
+      setShowModal(false);
     } else setDisabledModal(false);
   };
 
   useEffect(() => {
     window.addEventListener('resize', disableModal);
+    window.scrollTo(0, 0);
   });
 
   useEffect(() => {
@@ -73,20 +74,17 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
 
   return (
     <StyledGalleryContainer
-      key="gallery"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.7 }}
+      variants={motionContainer}
+      initial="hidden"
+      animate="visible"
     >
-      {activeModal && !disabledModal ? (
-        <Modal
-          image={gallery[activeImage]}
-          prev={prevImage}
-          next={nextImage}
-          close={closeModal}
-        />
-      ) : null}
+      <Modal
+        image={gallery[activeImage]}
+        prev={prevImage}
+        next={nextImage}
+        close={closeModal}
+        showModal={showModal}
+      />
       <PhotoAlbum
         layout="masonry"
         photos={gallery}
@@ -101,6 +99,11 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
       {showToTop ? <ToTop /> : null}
     </StyledGalleryContainer>
   );
+};
+
+const motionContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { delay: 0.7, duration: 0.3 } },
 };
 
 const StyledGalleryContainer = styled(motion(StyledArticle))`

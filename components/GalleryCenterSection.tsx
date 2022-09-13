@@ -25,13 +25,7 @@ export const GalleryCenterSection: React.FC<GalleryCenterSectionProps> = ({
           <h2>{data.titleFirst}</h2>
           <StructuredText data={data.contentFirst} />
           <Link href={data.galleryButtonLink}>
-            <LinkButton
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              {data.galleryButtonText}
-            </LinkButton>
+            <LinkButton>{data.galleryButtonText}</LinkButton>
           </Link>
         </InformationContainer>
       </InformationSection>
