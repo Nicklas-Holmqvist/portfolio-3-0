@@ -33,9 +33,7 @@ const Home: NextPage = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavHeader navLinks={data.allNavigations} logoData={data.logo} />
       <Layout sectionData={data.allSections} iconData={data.allIcons} />
-      <FooterSection footerData={data.allFooters} />
     </>
   );
 };

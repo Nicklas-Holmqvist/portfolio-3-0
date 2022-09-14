@@ -28,9 +28,20 @@ export const Gallery: React.FC<GalleryProps> = ({ galleryData, showToTop }) => {
     height: number;
     alt: string;
   }[] = [];
-  data.imageSet.forEach((item) => {
-    gallery.push(item.responsiveImage);
-  });
+  data.imageSet.forEach(
+    (item: {
+      responsiveImage: {
+        title: string;
+        src: string;
+        srcSet: string;
+        width: number;
+        height: number;
+        alt: string;
+      };
+    }) => {
+      gallery.push(item.responsiveImage);
+    }
+  );
 
   const openModal = (event: BaseSyntheticEvent) => {
     const currentImage = event.target.src;

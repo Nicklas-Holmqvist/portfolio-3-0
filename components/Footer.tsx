@@ -4,17 +4,15 @@ import styled from 'styled-components';
 import { IconLink } from './IconLink';
 import { AllFooter } from '../queries/dataQuery';
 
-interface FooterSectionProps {
-  footerData: AllFooter[];
-}
+interface FooterSectionProps {}
 
-export const FooterSection: React.FC<FooterSectionProps> = ({ footerData }) => {
+export const FooterSection: React.FC<FooterSectionProps> = () => {
   const date = new Date();
 
   return (
     <Footer>
       <IconContainer>
-        {footerData.map((icon, index) => (
+        {/* {footerData.map((icon, index) => (
           <span key={index}>
             <IconLink
               src={icon.image.url}
@@ -23,7 +21,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ footerData }) => {
               hasHover={icon.hasHover}
             />
           </span>
-        ))}
+        ))} */}
       </IconContainer>
       <p>
         Copyright &copy; | {date.getFullYear()} - Nicklas Holmqvist - All rights

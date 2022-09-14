@@ -9,8 +9,8 @@ import { HamburgerButton } from './HamburgerButton';
 import { Logo, AllNavigation } from '../queries/dataQuery';
 
 export interface NavHeaderProps {
-  navLinks: AllNavigation[];
-  logoData: Logo;
+  // navLinks: AllNavigation[];
+  // logoData: Logo;
 }
 
 export interface StyledHeaderProps {
@@ -18,7 +18,7 @@ export interface StyledHeaderProps {
   active: boolean;
 }
 
-export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
+export const NavHeader: React.FC<NavHeaderProps> = () => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
@@ -72,7 +72,7 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
               >
                 <MobileNav>
                   <AnimatePresence exitBeforeEnter>
-                    {navLinks.map((navLink, index) => (
+                    {/* {navLinks.map((navLink, index) => (
                       <motion.a
                         key={index}
                         variants={motionNavLink}
@@ -81,14 +81,15 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
                       >
                         <NavLink link={navLink.link} text={navLink.text} />
                       </motion.a>
-                    ))}
+                    ))} */}
                   </AnimatePresence>
                 </MobileNav>
               </MobileMenu>
             ) : null
           ) : (
             <DesktopMenu>
-              <Link href={logoData.href}>
+              HEADER
+              {/* <Link href={logoData.href}>
                 <Image
                   src={logoData.image.url}
                   alt={logoData.image.alt}
@@ -104,7 +105,7 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
                     text={navLink.text}
                   />
                 ))}
-              </DesktopNav>
+              </DesktopNav> */}
             </DesktopMenu>
           )}
         </AnimatePresence>
