@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import nextIcon from '../assets/svg/next-arrow.svg';
 import prevIcon from '../assets/svg/prev-arrow.svg';
@@ -12,6 +12,7 @@ interface ModalProps {
   prev: () => void;
   next: () => void;
   close: () => void;
+  showModal: boolean;
   image: {
     title: string;
     src: string;
@@ -22,51 +23,88 @@ interface ModalProps {
   };
 }
 
-export const Modal: React.FC<ModalProps> = ({ image, prev, next, close }) => {
+export const Modal: React.FC<ModalProps> = ({
+  image,
+  showModal,
+  prev,
+  next,
+  close,
+}) => {
   return (
-    <StyledModal>
-      <StyledModalContainer>
-        <StyledImageContainer
-          key={image.src}
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, stiffness: 100 }}
+    <AnimatePresence exitBeforeEnter>
+      {showModal ? (
+        <StyledModal
+          variants={motionBackdrop}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
         >
-          <Image
-            src={image.src}
-            alt={image.alt}
-            title={image.alt}
-            layout="fill"
-            objectFit="contain"
-          />
-        </StyledImageContainer>
-        <StyledImageText>{image.title}</StyledImageText>
-        <StyledCloseButton onClick={close}>
-          <Icon src={closeIcon} alt={'close'} hasHover={false} />
-        </StyledCloseButton>
-        <StyledPrevButton onClick={prev} className={'arrow'}>
-          <Icon src={prevIcon} alt={'prev'} hasHover={true} size={30} />
-        </StyledPrevButton>
-        <StyledNextButton onClick={next} className={'arrow'}>
-          <Icon src={nextIcon} alt={'next'} hasHover={true} size={30} />
-        </StyledNextButton>
-      </StyledModalContainer>
-    </StyledModal>
+          <StyledModalContainer>
+            <AnimatePresence exitBeforeEnter>
+              <StyledImageContainer
+                key={image.src}
+                variants={motionImage}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  title={image.alt}
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </StyledImageContainer>
+              <StyledImageText variants={motionText} exit={{ opacity: 0 }}>
+                {image.title}
+              </StyledImageText>
+            </AnimatePresence>
+            <StyledCloseButton onClick={close}>
+              <Icon src={closeIcon} alt={'close'} hasHover={false} />
+            </StyledCloseButton>
+            <StyledPrevButton onClick={prev} className={'arrow'}>
+              <Icon src={prevIcon} alt={'prev'} hasHover={true} size={30} />
+            </StyledPrevButton>
+            <StyledNextButton onClick={next} className={'arrow'}>
+              <Icon src={nextIcon} alt={'next'} hasHover={true} size={30} />
+            </StyledNextButton>
+          </StyledModalContainer>
+        </StyledModal>
+      ) : null}
+    </AnimatePresence>
   );
 };
 
-const StyledImageText = styled.p`
+const motionBackdrop = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0 },
+};
+
+const motionImage = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0, transition: { delay: 0.1, duration: 0.3 } },
+  exit: { opacity: 0, x: -25 },
+};
+
+const motionText = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { delay: 0.2, duration: 0.2 } },
+};
+
+const StyledImageText = styled(motion.p)`
   font-size: 1.1rem;
   text-align: center;
   color: #2a2a2a;
 `;
 
-const StyledModal = styled.article`
+const StyledModal = styled(motion.article)`
   position: fixed;
-  top: 0;
-  right: 0;
   bottom: 0;
   left: 0;
+  height: 100%;
+  width: 100%;
   background-color: #f0f0f0;
   z-index: 1000;
   h2 {

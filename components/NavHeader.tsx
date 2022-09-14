@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from './NavLink';
@@ -54,61 +54,93 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
       <Header
         height={headerHeight}
         active={activeBackgroundColor}
-        initial={{ opacity: 0, y: -70 }}
-        animate={{ opacity: 1, y: 0 }}
+        variants={motionHeader}
+        initial="hidden"
+        animate="visible"
       >
         {mobileView ? (
           <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
         ) : null}
-        {mobileView ? (
-          drawer ? (
-            <MobileMenu
-              initial={{ opacity: 0, margin: '-100%' }}
-              animate={{ opacity: 1, margin: 0 }}
-              exit={{ opacity: 0, margin: '-100%' }}
-              transition={{
-                delay: 0.1,
-                stiffness: 100,
-              }}
-            >
-              <MobileNav>
+        <AnimatePresence exitBeforeEnter>
+          {mobileView ? (
+            drawer ? (
+              <MobileMenu
+                variants={motionMobilMenu}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <MobileNav>
+                  <AnimatePresence exitBeforeEnter>
+                    {navLinks.map((navLink, index) => (
+                      <motion.a
+                        key={index}
+                        variants={motionNavLink}
+                        custom={index}
+                        onClick={() => setDrawer(!drawer)}
+                      >
+                        <NavLink link={navLink.link} text={navLink.text} />
+                      </motion.a>
+                    ))}
+                  </AnimatePresence>
+                </MobileNav>
+              </MobileMenu>
+            ) : null
+          ) : (
+            <DesktopMenu>
+              <Link href={logoData.href}>
+                <Image
+                  src={logoData.image.url}
+                  alt={logoData.image.alt}
+                  width={logoData.size}
+                  height={logoData.size}
+                />
+              </Link>
+              <DesktopNav>
                 {navLinks.map((navLink, index) => (
-                  <motion.a
+                  <NavLink
                     key={index}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: index * 0.4,
-                      duration: 0.1,
-                    }}
-                    onClick={() => setDrawer(!drawer)}
-                  >
-                    <NavLink link={navLink.link} text={navLink.text} />
-                  </motion.a>
+                    link={navLink.link}
+                    text={navLink.text}
+                  />
                 ))}
-              </MobileNav>
-            </MobileMenu>
-          ) : null
-        ) : (
-          <DesktopMenu>
-            <Link href={logoData.href}>
-              <Image
-                src={logoData.image.url}
-                alt={logoData.image.alt}
-                width={logoData.size}
-                height={logoData.size}
-              />
-            </Link>
-            <DesktopNav>
-              {navLinks.map((navLink, index) => (
-                <NavLink key={index} link={navLink.link} text={navLink.text} />
-              ))}
-            </DesktopNav>
-          </DesktopMenu>
-        )}
+              </DesktopNav>
+            </DesktopMenu>
+          )}
+        </AnimatePresence>
       </Header>
     </>
   );
+};
+
+const motionHeader = {
+  hidden: { opacity: 0, y: -70 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const motionMobilMenu = {
+  hidden: { opacity: 0, margin: '-100%' },
+  visible: {
+    opacity: 1,
+    margin: 0,
+    transition: {
+      delay: 0.1,
+      stiffness: 100,
+    },
+  },
+  exit: { opacity: 0, margin: '-100%' },
+};
+
+const motionNavLink = {
+  hidden: { opacity: 0, y: -10 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: index * 0.5,
+      duration: 0.1,
+    },
+  }),
 };
 
 const Header = styled(motion.header)<StyledHeaderProps>`

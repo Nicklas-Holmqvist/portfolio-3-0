@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledArticle = styled.article`
-  min-height: 800px;
+  min-height: 900px;
   height: 100%;
   max-width: 1900px;
   width: 100%;

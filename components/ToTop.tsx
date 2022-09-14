@@ -10,14 +10,24 @@ interface ToTopProps {}
 export const ToTop: React.FC<ToTopProps> = () => {
   return (
     <StyledToTop
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+      variants={motionToTop}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
       onClick={() => window.scrollTo(0, 0)}
     >
       <Icon src={toTopIcon} alt={'gå upp'} hasHover={false} size={40} />
     </StyledToTop>
   );
+};
+
+const motionToTop = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0 },
+  hover: {
+    scale: 1.1,
+    transition: { duration: 0.2 },
+  },
 };
 
 const StyledToTop = styled(motion.button)`
