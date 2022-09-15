@@ -1,20 +1,18 @@
 import type { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Layout } from '../components/Layout';
 
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const client = new QueryClient();
   return (
-    <QueryClientProvider client={client}>
+    <>
       <GlobalStyles />
       <Layout>
         <Component {...pageProps} />;
       </Layout>
-    </QueryClientProvider>
+    </>
   );
 }
 

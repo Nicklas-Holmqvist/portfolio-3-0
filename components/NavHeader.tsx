@@ -56,8 +56,6 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
   useEffect(() => {
     changeMobileView();
   }, []);
-  console.log(path.asPath === navLinks[0].link);
-  console.log(path.asPath, navLinks[0].link);
 
   return (
     <>
@@ -71,17 +69,16 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
         {mobileView ? (
           <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
         ) : null}
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {mobileView ? (
             drawer ? (
               <MobileMenu
                 variants={motionMobilMenu}
                 initial="hidden"
                 animate="visible"
-                exit="exit"
               >
                 <MobileNav>
-                  <AnimatePresence exitBeforeEnter>
+                  <AnimatePresence>
                     {navLinks.map((navLink, index) => (
                       <motion.a
                         key={index}

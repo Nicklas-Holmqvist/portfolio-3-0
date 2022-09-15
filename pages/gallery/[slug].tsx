@@ -83,7 +83,7 @@ const Gallery: NextPage = ({
     height: number;
     alt: string;
   }[] = [];
-  data.gallery.imageSet.forEach(
+  galleryData.gallery.imageSet.forEach(
     (item: {
       responsiveImage: {
         title: string;

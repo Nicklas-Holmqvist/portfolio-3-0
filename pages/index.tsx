@@ -2,14 +2,13 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 
 import { Hero } from '../components/Hero';
 import { ToTop } from '../components/ToTop';
 import { About } from '../components/About';
 import { request } from '../lib/datocms';
-import { Gallery } from '../components/Gallery';
 import { ProjectSection } from '../components/ProjectSection';
 import { GalleryCenterSection } from '../components/GalleryCenterSection';
 import { GalleryStandardSection } from '../components/GalleryStandardSection';
@@ -73,26 +72,20 @@ const Home: NextPage = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <Main
           variants={motionMain}
           initial="hidden"
           animate="visible"
           exit="exit"
         >
-          {showGallery && findGallery.length !== 0 ? (
-            <Gallery galleryData={findGallery} showToTop={showToTop} />
-          ) : (
-            <>
-              <Hero />
-              <ProjectSection data={sections.project} />
-              <GalleryStandardSection data={sections.landscapes} />
-              <GalleryCenterSection data={sections.oldBuildings} />
-              <GalleryStandardSection data={sections.details} />
-              <About data={sections.about} />
-              {showToTop ? <ToTop /> : null}
-            </>
-          )}
+          <Hero />
+          <ProjectSection data={sections.project} />
+          <GalleryStandardSection data={sections.landscapes} />
+          <GalleryCenterSection data={sections.oldBuildings} />
+          <GalleryStandardSection data={sections.details} />
+          <About data={sections.about} />
+          {showToTop ? <ToTop /> : null}
         </Main>
       </AnimatePresence>
     </>
