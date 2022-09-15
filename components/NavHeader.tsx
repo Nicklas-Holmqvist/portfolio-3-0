@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from './NavLink';
 import { HamburgerButton } from './HamburgerButton';
 import { Logo, AllNavigation } from '../queries/dataQuery';
+import logo from '../assets/logo.png';
 
 export interface NavHeaderProps {
   // navLinks: AllNavigation[];
@@ -30,6 +31,12 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
       ? setActiveBackgroundColor(true)
       : setActiveBackgroundColor(false);
   };
+
+  const navLinks = [
+    { text: 'Projekt', link: 'project' },
+    { text: 'Gallerier', link: 'landscapes' },
+    { text: 'Om mig', link: 'about' },
+  ];
 
   const changeMobileView = () => {
     const innerWidth = window.innerWidth;
@@ -72,7 +79,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
               >
                 <MobileNav>
                   <AnimatePresence exitBeforeEnter>
-                    {/* {navLinks.map((navLink, index) => (
+                    {navLinks.map((navLink, index) => (
                       <motion.a
                         key={index}
                         variants={motionNavLink}
@@ -81,21 +88,15 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
                       >
                         <NavLink link={navLink.link} text={navLink.text} />
                       </motion.a>
-                    ))} */}
+                    ))}
                   </AnimatePresence>
                 </MobileNav>
               </MobileMenu>
             ) : null
           ) : (
             <DesktopMenu>
-              HEADER
-              {/* <Link href={logoData.href}>
-                <Image
-                  src={logoData.image.url}
-                  alt={logoData.image.alt}
-                  width={logoData.size}
-                  height={logoData.size}
-                />
+              <Link href={'/'}>
+                <Image src={logo} alt="logo" width={40} height={40} />
               </Link>
               <DesktopNav>
                 {navLinks.map((navLink, index) => (
@@ -105,7 +106,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
                     text={navLink.text}
                   />
                 ))}
-              </DesktopNav> */}
+              </DesktopNav>
             </DesktopMenu>
           )}
         </AnimatePresence>
