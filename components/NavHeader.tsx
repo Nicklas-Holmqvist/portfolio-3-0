@@ -4,15 +4,12 @@ import styled, { css } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
-import { NavLink } from './NavLink';
-import { HamburgerButton } from './HamburgerButton';
-import { Logo, AllNavigation } from '../queries/dataQuery';
 import logo from '../assets/logo.png';
+import { NavLink } from './NavLink';
+import { useRouter } from 'next/router';
+import { HamburgerButton } from './HamburgerButton';
 
-export interface NavHeaderProps {
-  // navLinks: AllNavigation[];
-  // logoData: Logo;
-}
+export interface NavHeaderProps {}
 
 export interface StyledHeaderProps {
   height: number;
@@ -24,6 +21,8 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
   const [mobileView, setMobileView] = useState<boolean>(false);
+
+  const path = useRouter();
   const headerHeight: number = 70;
 
   const changeBackgroundColor: () => void = () => {
@@ -33,9 +32,11 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
   };
 
   const navLinks = [
-    { text: 'Projekt', link: 'project' },
-    { text: 'Gallerier', link: 'landscapes' },
-    { text: 'Om mig', link: 'about' },
+    { text: 'Projekt', link: '/#project' },
+    { text: 'Landskap', link: '/gallery/landscapes' },
+    { text: 'Gamla byggnader', link: '/gallery/old_buildings' },
+    { text: 'Detaljer', link: '/gallery/details' },
+    { text: 'Om mig', link: '/#about' },
   ];
 
   const changeMobileView = () => {
@@ -55,6 +56,8 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
   useEffect(() => {
     changeMobileView();
   }, []);
+  console.log(path.asPath === navLinks[0].link);
+  console.log(path.asPath, navLinks[0].link);
 
   return (
     <>
@@ -68,7 +71,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
         {mobileView ? (
           <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
         ) : null}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="wait">
           {mobileView ? (
             drawer ? (
               <MobileMenu
@@ -86,7 +89,11 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
                         custom={index}
                         onClick={() => setDrawer(!drawer)}
                       >
-                        <NavLink link={navLink.link} text={navLink.text} />
+                        <NavLink
+                          link={navLink.link}
+                          text={navLink.text}
+                          active={path.asPath === navLink.link ? true : false}
+                        />
                       </motion.a>
                     ))}
                   </AnimatePresence>
@@ -104,6 +111,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
                     key={index}
                     link={navLink.link}
                     text={navLink.text}
+                    active={path.asPath === navLink.link ? true : false}
                   />
                 ))}
               </DesktopNav>
@@ -204,7 +212,7 @@ const DesktopNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: end;
-  width: 18rem;
+  width: 30rem;
 `;
 
 const MobileNav = styled.nav`
