@@ -1,4 +1,9 @@
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types';
+import {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
+  NextPage,
+} from 'next/types';
 import { useRouter } from 'next/router';
 import { request } from '../../lib/datocms';
 import { ImageGallery } from '../../queries/dataQuery';
@@ -8,10 +13,12 @@ import PhotoAlbum from 'react-photo-album';
 import styled from 'styled-components';
 import { Modal } from '../../components/Modal';
 import { StyledArticle } from '../../components/StyledArticle';
+import { ToTop } from '../../components/ToTop';
+import Loader from '../../components/Loader';
 
-export const getGallery = (params: any) => {
+export const getGallery = (slug: string) => {
   return `query Gallery {
-    gallery(filter: {slug: {eq: ${params.slug}}}) {
+    gallery(filter: {slug: {eq: ${slug}}}) {
       title
       slug
       imageSet {
@@ -32,7 +39,7 @@ interface Galleries {
   slug: string;
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const res: {
     allGalleries: {
       slug: string;
@@ -53,13 +60,11 @@ export async function getStaticPaths() {
     paths,
     fallback: true,
   };
-}
+};
 
-export const getStaticProps: GetStaticProps<{
-  [key: string]: ImageGallery;
-}> = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const data: ImageGallery = await request({
-    query: getGallery(params),
+    query: getGallery(params?.slug as string),
   });
   return {
     props: { data },
@@ -75,6 +80,12 @@ const Gallery: NextPage = ({
   const [activeImage, setActiveImage] = useState<number>(0);
   const [disabledModal, setDisabledModal] = useState<boolean>(false);
 
+  const [showToTop, setShowToTop] = useState<boolean>(false);
+
+  const toggleShowToTop: () => void = () => {
+    window.scrollY >= 200 ? setShowToTop(true) : setShowToTop(false);
+  };
+
   const gallery: {
     title: string;
     src: string;
@@ -83,6 +94,7 @@ const Gallery: NextPage = ({
     height: number;
     alt: string;
   }[] = [];
+
   galleryData.gallery.imageSet.forEach(
     (item: {
       responsiveImage: {
@@ -144,25 +156,31 @@ const Gallery: NextPage = ({
       initial="hidden"
       animate="visible"
     >
-      <Modal
-        image={gallery[activeImage]}
-        prev={prevImage}
-        next={nextImage}
-        close={closeModal}
-        showModal={showModal}
-      />
-      <PhotoAlbum
-        layout="masonry"
-        photos={gallery}
-        onClick={!disabledModal ? openModal : undefined}
-        columns={(containerWidth) => {
-          if (containerWidth < 500) return 1;
-          if (containerWidth < 1100) return 2;
-          return 4;
-        }}
-        spacing={5}
-      />
-      {/* {showToTop ? <ToTop /> : null} */}
+      {gallery.length === 0 ? (
+        <Loader />
+      ) : (
+        <>
+          <Modal
+            image={gallery[activeImage]}
+            prev={prevImage}
+            next={nextImage}
+            close={closeModal}
+            showModal={showModal}
+          />
+          <PhotoAlbum
+            layout="masonry"
+            photos={gallery}
+            onClick={!disabledModal ? openModal : undefined}
+            columns={(containerWidth) => {
+              if (containerWidth < 500) return 1;
+              if (containerWidth < 1100) return 2;
+              return 4;
+            }}
+            spacing={5}
+          />
+          {showToTop ? <ToTop /> : null}
+        </>
+      )}
     </StyledGalleryContainer>
   );
 };

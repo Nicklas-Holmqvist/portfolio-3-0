@@ -39,7 +39,6 @@ const Home: NextPage = ({
     return data.allSections.find((section) => section.sectionId === sectionId);
   };
   const [showToTop, setShowToTop] = useState<boolean>(false);
-  const [showGallery, setShowGallery] = useState<boolean>(false);
 
   const sections: { [key: string]: Section } = {
     project: findSection('project') || data.allSections[0],
@@ -57,11 +56,6 @@ const Home: NextPage = ({
     window.addEventListener('scroll', toggleShowToTop);
   });
 
-  useEffect(() => {
-    if (findGallery.length === 0) return setShowGallery(false);
-    if (activeGallery.asPath === findGallery[0].galleryButtonLink)
-      setShowGallery(true);
-  }, [activeGallery, findGallery, data.allSections]);
   return (
     <>
       <Head>
