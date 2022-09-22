@@ -4,13 +4,13 @@ import {
   InferGetStaticPropsType,
   NextPage,
 } from 'next/types';
-import { useRouter } from 'next/router';
 import { request } from '../../lib/datocms';
 import { ImageGallery } from '../../queries/dataQuery';
-import { motion } from 'framer-motion';
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
-import PhotoAlbum from 'react-photo-album';
+import PhotoAlbum, { Image } from 'react-photo-album';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
 import { Modal } from '../../components/Modal';
 import { StyledArticle } from '../../components/StyledArticle';
 import { ToTop } from '../../components/ToTop';
@@ -62,10 +62,47 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const data: ImageGallery = await request({
-    query: getGallery(params?.slug as string),
+export const getStaticProps: GetStaticProps<{
+  [key: string]: {
+    title: string;
+    src: string;
+    srcSet: string;
+    width: number;
+    height: number;
+    alt: string;
+  }[];
+}> = async ({ params }) => {
+  const slug = params?.slug;
+  const response: ImageGallery = await request({
+    query: `query Gallery {
+        gallery(filter: {slug: {eq: ${slug}}}) {
+          title
+          slug
+          imageSet {
+            responsiveImage {
+              title
+              src
+              srcSet
+              width
+              height
+              alt
+                }
+          }
+        }
+      }`,
   });
+
+  const data: {
+    title: string;
+    src: string;
+    srcSet: string;
+    width: number;
+    height: number;
+    alt: string;
+  }[] = response.gallery.imageSet.map((image) => {
+    return image.responsiveImage;
+  });
+
   return {
     props: { data },
   };
@@ -74,18 +111,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 const Gallery: NextPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const galleryData: ImageGallery = data;
-
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [activeImage, setActiveImage] = useState<number>(0);
-  const [disabledModal, setDisabledModal] = useState<boolean>(false);
-
-  const [showToTop, setShowToTop] = useState<boolean>(false);
-
-  const toggleShowToTop: () => void = () => {
-    window.scrollY >= 200 ? setShowToTop(true) : setShowToTop(false);
-  };
-
   const gallery: {
     title: string;
     src: string;
@@ -93,22 +118,20 @@ const Gallery: NextPage = ({
     width: number;
     height: number;
     alt: string;
-  }[] = [];
+  }[] = data;
 
-  galleryData.gallery.imageSet.forEach(
-    (item: {
-      responsiveImage: {
-        title: string;
-        src: string;
-        srcSet: string;
-        width: number;
-        height: number;
-        alt: string;
-      };
-    }) => {
-      gallery.push(item.responsiveImage);
-    }
-  );
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [activeImage, setActiveImage] = useState<number>(0);
+  const [disabledModal, setDisabledModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [showToTop, setShowToTop] = useState<boolean>(false);
+
+  const toggleShowToTop: () => void = () => {
+    window.scrollY >= 200 ? setShowToTop(true) : setShowToTop(false);
+  };
+
+  if (!gallery) setIsLoading(true);
 
   const openModal = (event: BaseSyntheticEvent) => {
     const currentImage = event.target.src;
@@ -155,8 +178,9 @@ const Gallery: NextPage = ({
       variants={motionContainer}
       initial="hidden"
       animate="visible"
+      exit="exit"
     >
-      {gallery.length === 0 ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>
@@ -189,7 +213,8 @@ export default Gallery;
 
 const motionContainer = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { delay: 0.7, duration: 0.3 } },
+  visible: { opacity: 1, transition: { delay: 0.3, duration: 0.5 } },
+  exit: { opacity: 0 },
 };
 
 const StyledGalleryContainer = styled(motion(StyledArticle))`

@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import logo from '../assets/logo.png';
 import { NavLink } from './NavLink';
 import { useRouter } from 'next/router';
 import { HamburgerButton } from './HamburgerButton';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export interface NavHeaderProps {}
 

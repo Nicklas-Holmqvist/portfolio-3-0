@@ -17,7 +17,6 @@
     "react-datocms": "^3.1.0",
     "react-dom": "18.2.0",
     "react-photo-album": "^1.16.1",
-    "react-query": "^3.39.2",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

@@ -86,14 +86,17 @@ export interface Logo {
 
 export interface ImageGallery {
   imageSet: any;
-  gallery: {
-    title: string;
-    slug: string;
-    imageSet: ResponsiveImage[];
-  };
+  gallery: Gallery;
+}
+
+export interface Gallery {
+  title: string;
+  slug: string;
+  imageSet: ResponsiveImage[];
 }
 
 export interface ResponsiveImage {
+  src: any;
   responsiveImage: {
     title: string;
     src: string;
