@@ -15,25 +15,7 @@ import { Modal } from '../../components/Modal';
 import { StyledArticle } from '../../components/StyledArticle';
 import { ToTop } from '../../components/ToTop';
 import Loader from '../../components/Loader';
-
-export const getGallery = (slug: string) => {
-  return `query Gallery {
-    gallery(filter: {slug: {eq: ${slug}}}) {
-      title
-      slug
-      imageSet {
-        responsiveImage {
-          title
-          src
-          srcSet
-          width
-          height
-          alt
-            }
-      }
-    }
-  }`;
-};
+import { ParsedUrlQuery } from 'querystring';
 
 interface Galleries {
   slug: string;
@@ -41,9 +23,7 @@ interface Galleries {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res: {
-    allGalleries: {
-      slug: string;
-    }[];
+    allGalleries: Galleries[];
   } = await request({
     query: `query allGallery {
       allGalleries{
@@ -51,14 +31,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }`,
   });
-  const paths = res.allGalleries.map((item: { slug: string }) => {
+  const paths = res.allGalleries.map((item: Galleries) => {
     return {
-      params: { slug: item.slug },
+      params: { slug: item.slug.toString() },
     };
   });
+
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 };
 
@@ -72,7 +53,7 @@ export const getStaticProps: GetStaticProps<{
     alt: string;
   }[];
 }> = async ({ params }) => {
-  const slug = params?.slug;
+  const slug = (params as ParsedUrlQuery).slug;
   const response: ImageGallery = await request({
     query: `query Gallery {
         gallery(filter: {slug: {eq: ${slug}}}) {
@@ -80,12 +61,10 @@ export const getStaticProps: GetStaticProps<{
           slug
           imageSet {
             responsiveImage {
-              title
               src
               srcSet
               width
               height
-              alt
                 }
           }
         }
@@ -102,7 +81,6 @@ export const getStaticProps: GetStaticProps<{
   }[] = response.gallery.imageSet.map((image) => {
     return image.responsiveImage;
   });
-
   return {
     props: { data },
   };
@@ -111,15 +89,6 @@ export const getStaticProps: GetStaticProps<{
 const Gallery: NextPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const gallery: {
-    title: string;
-    src: string;
-    srcSet: string;
-    width: number;
-    height: number;
-    alt: string;
-  }[] = data;
-
   const [showModal, setShowModal] = useState<boolean>(false);
   const [activeImage, setActiveImage] = useState<number>(0);
   const [disabledModal, setDisabledModal] = useState<boolean>(false);
@@ -131,11 +100,11 @@ const Gallery: NextPage = ({
     window.scrollY >= 200 ? setShowToTop(true) : setShowToTop(false);
   };
 
-  if (!gallery) setIsLoading(true);
+  if (!data) setIsLoading(true);
 
   const openModal = (event: BaseSyntheticEvent) => {
     const currentImage = event.target.src;
-    const index = gallery.findIndex((image) => {
+    const index = data.findIndex((image) => {
       return image.src === currentImage;
     });
     setActiveImage(index);
@@ -148,7 +117,7 @@ const Gallery: NextPage = ({
   };
 
   const nextImage = () => {
-    if (activeImage >= gallery.length - 1) return;
+    if (activeImage >= data.length - 1) return;
     else setActiveImage(activeImage + 1);
   };
 
@@ -185,7 +154,7 @@ const Gallery: NextPage = ({
       ) : (
         <>
           <Modal
-            image={gallery[activeImage]}
+            image={data[activeImage]}
             prev={prevImage}
             next={nextImage}
             close={closeModal}
@@ -193,7 +162,7 @@ const Gallery: NextPage = ({
           />
           <PhotoAlbum
             layout="masonry"
-            photos={gallery}
+            photos={data}
             onClick={!disabledModal ? openModal : undefined}
             columns={(containerWidth) => {
               if (containerWidth < 500) return 1;
