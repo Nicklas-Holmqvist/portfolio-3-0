@@ -4,17 +4,18 @@ import {
   InferGetStaticPropsType,
   NextPage,
 } from 'next/types';
+import styled from 'styled-components';
+import PhotoAlbum from 'react-photo-album';
+import { motion } from 'framer-motion';
 import { request } from '../../lib/datocms';
 import { ImageGallery } from '../../queries/dataQuery';
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
-import PhotoAlbum, { Image } from 'react-photo-album';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
 
-import { Modal } from '../../components/Modal';
-import { StyledArticle } from '../../components/StyledArticle';
-import { ToTop } from '../../components/ToTop';
 import Loader from '../../components/Loader';
+import { Modal } from '../../components/Modal';
+import { ToTop } from '../../components/ToTop';
+import { BackArrow } from '../../components/BackArrow';
+import { StyledArticle } from '../../components/StyledArticle';
 import { ParsedUrlQuery } from 'querystring';
 
 interface Galleries {
@@ -160,6 +161,16 @@ const Gallery: NextPage = ({
             close={closeModal}
             showModal={showModal}
           />
+          <GoBackContainer
+            variants={motionGoBackArrow}
+            whileHover={{ x: 0 }}
+            whileTap={{ scale: 0.9 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <BackArrow />
+          </GoBackContainer>
           <PhotoAlbum
             layout="masonry"
             photos={data}
@@ -186,6 +197,12 @@ const motionContainer = {
   exit: { opacity: 0 },
 };
 
+const motionGoBackArrow = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, x: 10, transition: { duration: 0.2 } },
+  exit: { opacity: 0 },
+};
+
 const StyledGalleryContainer = styled(motion(StyledArticle))`
   flex-direction: column;
   @media (max-width: 1500px) {
@@ -197,4 +214,9 @@ const StyledGalleryContainer = styled(motion(StyledArticle))`
   @media (max-width: 800px) {
     padding: 5rem 0 2rem 0;
   }
+`;
+
+const GoBackContainer = styled(motion.div)`
+  width: 1.8rem;
+  padding-bottom: 0.5rem;
 `;
