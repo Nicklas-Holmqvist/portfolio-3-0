@@ -31,7 +31,7 @@ export const Modal: React.FC<ModalProps> = ({
   close,
 }) => {
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {showModal ? (
         <StyledModal
           variants={motionBackdrop}
@@ -40,7 +40,7 @@ export const Modal: React.FC<ModalProps> = ({
           exit="exit"
         >
           <StyledModalContainer>
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence mode="wait">
               <StyledImageContainer
                 key={image.src}
                 variants={motionImage}

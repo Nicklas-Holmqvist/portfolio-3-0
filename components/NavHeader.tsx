@@ -1,28 +1,28 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
+import logo from '../assets/logo.png';
 import { NavLink } from './NavLink';
+import { useRouter } from 'next/router';
 import { HamburgerButton } from './HamburgerButton';
-import { Logo, AllNavigation } from '../queries/dataQuery';
+import { AnimatePresence, motion } from 'framer-motion';
 
-export interface NavHeaderProps {
-  navLinks: AllNavigation[];
-  logoData: Logo;
-}
+export interface NavHeaderProps {}
 
 export interface StyledHeaderProps {
   height: number;
   active: boolean;
 }
 
-export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
+export const NavHeader: React.FC<NavHeaderProps> = () => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
   const [mobileView, setMobileView] = useState<boolean>(false);
+
+  const path = useRouter();
   const headerHeight: number = 70;
 
   const changeBackgroundColor: () => void = () => {
@@ -30,6 +30,14 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
       ? setActiveBackgroundColor(true)
       : setActiveBackgroundColor(false);
   };
+
+  const navLinks = [
+    { text: 'Projekt', link: '/#project' },
+    { text: 'Landskap', link: '/gallery/landscapes' },
+    { text: 'Gamla byggnader', link: '/gallery/old_buildings' },
+    { text: 'Detaljer', link: '/gallery/details' },
+    { text: 'Om mig', link: '/#about' },
+  ];
 
   const changeMobileView = () => {
     const innerWidth = window.innerWidth;
@@ -61,17 +69,16 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
         {mobileView ? (
           <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
         ) : null}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           {mobileView ? (
             drawer ? (
               <MobileMenu
                 variants={motionMobilMenu}
                 initial="hidden"
                 animate="visible"
-                exit="exit"
               >
                 <MobileNav>
-                  <AnimatePresence exitBeforeEnter>
+                  <AnimatePresence>
                     {navLinks.map((navLink, index) => (
                       <motion.a
                         key={index}
@@ -79,7 +86,11 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
                         custom={index}
                         onClick={() => setDrawer(!drawer)}
                       >
-                        <NavLink link={navLink.link} text={navLink.text} />
+                        <NavLink
+                          link={navLink.link}
+                          text={navLink.text}
+                          active={path.asPath === navLink.link ? true : false}
+                        />
                       </motion.a>
                     ))}
                   </AnimatePresence>
@@ -88,13 +99,8 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
             ) : null
           ) : (
             <DesktopMenu>
-              <Link href={logoData.href}>
-                <Image
-                  src={logoData.image.url}
-                  alt={logoData.image.alt}
-                  width={logoData.size}
-                  height={logoData.size}
-                />
+              <Link href={'/'}>
+                <Image src={logo} alt="logo" width={40} height={40} />
               </Link>
               <DesktopNav>
                 {navLinks.map((navLink, index) => (
@@ -102,6 +108,7 @@ export const NavHeader: React.FC<NavHeaderProps> = ({ navLinks, logoData }) => {
                     key={index}
                     link={navLink.link}
                     text={navLink.text}
+                    active={path.asPath === navLink.link ? true : false}
                   />
                 ))}
               </DesktopNav>
@@ -202,7 +209,7 @@ const DesktopNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: end;
-  width: 18rem;
+  width: 30rem;
 `;
 
 const MobileNav = styled.nav`

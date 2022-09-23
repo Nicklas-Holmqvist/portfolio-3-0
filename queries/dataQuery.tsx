@@ -85,11 +85,18 @@ export interface Logo {
 }
 
 export interface ImageGallery {
+  imageSet: any;
+  gallery: Gallery;
+}
+
+export interface Gallery {
   title: string;
+  slug: string;
   imageSet: ResponsiveImage[];
 }
 
 export interface ResponsiveImage {
+  src: any;
   responsiveImage: {
     title: string;
     src: string;
@@ -127,6 +134,7 @@ export const dataQuery = `query allData {
     ariaLabel
     imageGallery {
       title
+      slug
       imageSet {
         responsiveImage {
           title
