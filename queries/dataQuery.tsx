@@ -92,19 +92,21 @@ export interface ImageGallery {
 export interface Gallery {
   title: string;
   slug: string;
-  imageSet: ResponsiveImage[];
+  imageSet: ImageSet[];
+}
+
+export interface ImageSet {
+  src: any;
+  responsiveImage: ResponsiveImage;
 }
 
 export interface ResponsiveImage {
-  src: any;
-  responsiveImage: {
-    title: string;
-    src: string;
-    srcSet: string;
-    width: number;
-    height: number;
-    alt: string;
-  };
+  title: string;
+  src: string;
+  srcSet: string;
+  width: number;
+  height: number;
+  alt: string;
 }
 
 export const dataQuery = `query allData {

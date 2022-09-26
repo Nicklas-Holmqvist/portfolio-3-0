@@ -4,11 +4,12 @@ import {
   InferGetStaticPropsType,
   NextPage,
 } from 'next/types';
+import Head from 'next/head';
 import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
 import { motion } from 'framer-motion';
 import { request } from '../../lib/datocms';
-import { ImageGallery } from '../../queries/dataQuery';
+import { ParsedUrlQuery } from 'querystring';
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
 
 import Loader from '../../components/Loader';
@@ -16,10 +17,15 @@ import { Modal } from '../../components/Modal';
 import { ToTop } from '../../components/ToTop';
 import { BackArrow } from '../../components/BackArrow';
 import { StyledArticle } from '../../components/StyledArticle';
-import { ParsedUrlQuery } from 'querystring';
+import { ImageGallery, ResponsiveImage } from '../../queries/dataQuery';
 
 interface Galleries {
   slug: string;
+}
+
+interface GetStaticPropsResponse {
+  images: ResponsiveImage[];
+  head: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -44,16 +50,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<{
-  [key: string]: {
-    title: string;
-    src: string;
-    srcSet: string;
-    width: number;
-    height: number;
-    alt: string;
-  }[];
-}> = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = (params as ParsedUrlQuery).slug;
   const response: ImageGallery = await request({
     query: `query Gallery {
@@ -72,16 +69,13 @@ export const getStaticProps: GetStaticProps<{
       }`,
   });
 
-  const data: {
-    title: string;
-    src: string;
-    srcSet: string;
-    width: number;
-    height: number;
-    alt: string;
-  }[] = response.gallery.imageSet.map((image) => {
-    return image.responsiveImage;
-  });
+  const data: GetStaticPropsResponse = {
+    images: response.gallery.imageSet.map((image) => {
+      return image.responsiveImage;
+    }),
+    head: response.gallery.title,
+  };
+
   return {
     props: { data },
   };
@@ -105,7 +99,7 @@ const Gallery: NextPage = ({
 
   const openModal = (event: BaseSyntheticEvent) => {
     const currentImage = event.target.src;
-    const index = data.findIndex((image) => {
+    const index = data.images.findIndex((image: ResponsiveImage) => {
       return image.src === currentImage;
     });
     setActiveImage(index);
@@ -150,12 +144,15 @@ const Gallery: NextPage = ({
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <title>{data.head}</title>
+      </Head>
       {isLoading ? (
         <Loader />
       ) : (
         <>
           <Modal
-            image={data[activeImage]}
+            image={data.images[activeImage]}
             prev={prevImage}
             next={nextImage}
             close={closeModal}
@@ -173,7 +170,7 @@ const Gallery: NextPage = ({
           </GoBackContainer>
           <PhotoAlbum
             layout="masonry"
-            photos={data}
+            photos={data.images}
             onClick={!disabledModal ? openModal : undefined}
             columns={(containerWidth) => {
               if (containerWidth < 500) return 1;
