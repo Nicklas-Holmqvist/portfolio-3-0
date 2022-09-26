@@ -17,6 +17,7 @@ import { ToTop } from '../../components/ToTop';
 import { BackArrow } from '../../components/BackArrow';
 import { StyledArticle } from '../../components/StyledArticle';
 import { ParsedUrlQuery } from 'querystring';
+import Head from 'next/head';
 
 interface Galleries {
   slug: string;
@@ -83,12 +84,13 @@ export const getStaticProps: GetStaticProps<{
     return image.responsiveImage;
   });
   return {
-    props: { data },
+    props: { data, response },
   };
 };
 
 const Gallery: NextPage = ({
   data,
+  response,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [activeImage, setActiveImage] = useState<number>(0);
@@ -150,6 +152,9 @@ const Gallery: NextPage = ({
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <title>{response.gallery.title}</title>
+      </Head>
       {isLoading ? (
         <Loader />
       ) : (

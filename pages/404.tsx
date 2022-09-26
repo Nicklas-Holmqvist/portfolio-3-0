@@ -3,18 +3,24 @@ import styled from 'styled-components';
 import { NextPage } from 'next/types';
 
 import { BackArrow } from '../components/BackArrow';
+import Head from 'next/head';
 
 interface ErrorPageProps {}
 
 const ErrorPage: NextPage<ErrorPageProps> = () => {
   return (
-    <ErrorPageContainer>
-      <h2>Inget här att se!</h2>
-      <div>
-        <BackArrow />
-        <p>Gå tillbaka!</p>
-      </div>
-    </ErrorPageContainer>
+    <>
+      <Head>
+        <title>Error, du har kommit fel!</title>
+      </Head>
+      <ErrorPageContainer>
+        <h2>Inget här att se!</h2>
+        <div>
+          <BackArrow />
+          <p>Gå tillbaka!</p>
+        </div>
+      </ErrorPageContainer>
+    </>
   );
 };
 

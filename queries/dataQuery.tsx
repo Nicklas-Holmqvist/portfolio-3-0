@@ -1,6 +1,6 @@
 export interface DataQuery {
   allSections: Section[];
-  allHeads: AllHeads;
+  allHeads: AllHeads[];
   allFooters: AllFooter[];
   allIcons: AllIcon[];
   allNavigations: AllNavigation[];

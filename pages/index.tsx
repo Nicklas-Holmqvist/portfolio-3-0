@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import styled from 'styled-components';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 
 import { Hero } from '../components/Hero';
@@ -28,13 +27,6 @@ export const getStaticProps: GetStaticProps<{
 const Home: NextPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const activeGallery = useRouter();
-  const findGallery = data.allSections.filter((section) => {
-    return section.galleryButtonLink === activeGallery.asPath;
-  });
-
-  const motionKey = activeGallery.asPath.includes('gallery');
-
   const findSection = (sectionId: string) => {
     return data.allSections.find((section) => section.sectionId === sectionId);
   };
@@ -59,12 +51,11 @@ const Home: NextPage = ({
   return (
     <>
       <Head>
-        <title>{data.allHeads.title}</title>
+        <title>{data.allHeads[0].title}</title>
         <meta
-          name={data.allHeads.metaName}
-          content={data.allHeads.metaContent}
+          name={data.allHeads[0].metaName}
+          content={data.allHeads[0].metaContent}
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <AnimatePresence mode="wait">
         <Main

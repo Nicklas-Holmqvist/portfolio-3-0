@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
 
 import { Layout } from '../components/Layout';
@@ -8,6 +9,9 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <GlobalStyles />
       <Layout>
         <Component {...pageProps} />
