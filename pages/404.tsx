@@ -1,6 +1,7 @@
 import React from 'react';
-import { NextPage } from 'next/types';
 import styled from 'styled-components';
+import { NextPage } from 'next/types';
+
 import { BackArrow } from '../components/BackArrow';
 
 interface ErrorPageProps {}
