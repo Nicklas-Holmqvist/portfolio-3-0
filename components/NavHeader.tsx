@@ -67,7 +67,17 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
         animate="visible"
       >
         {mobileView ? (
-          <HamburgerButton active={drawer} onClick={() => setDrawer(!drawer)} />
+          <>
+            <HamburgerButton
+              active={drawer}
+              onClick={() => setDrawer(!drawer)}
+            />
+            <LogoContainer>
+              <Link href={'/'}>
+                <LogoImage src={logo} alt="logo" width={40} height={40} />
+              </Link>
+            </LogoContainer>
+          </>
         ) : null}
         <AnimatePresence>
           {mobileView ? (
@@ -99,9 +109,16 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
             ) : null
           ) : (
             <DesktopMenu>
-              <Link href={'/'}>
-                <Image src={logo} alt="logo" width={40} height={40} />
-              </Link>
+              <LogoContainer
+                variants={motionLogoContainer}
+                whileTap={{ scale: 0.9 }}
+                initial="hidden"
+                animate="visible"
+              >
+                <Link href={'/'}>
+                  <LogoImage src={logo} alt="logo" width={40} height={40} />
+                </Link>
+              </LogoContainer>
               <DesktopNav>
                 {navLinks.map((navLink, index) => (
                   <NavLink
@@ -144,10 +161,15 @@ const motionNavLink = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: index * 0.5,
+      delay: index * 0.3,
       duration: 0.1,
     },
   }),
+};
+
+const motionLogoContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.2 } },
 };
 
 const Header = styled(motion.header)<StyledHeaderProps>`
@@ -165,6 +187,17 @@ const Header = styled(motion.header)<StyledHeaderProps>`
           background-color: none;
         `}
   transition: all 0.5s;
+`;
+
+const LogoContainer = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const LogoImage = styled(Image)`
+  cursor: pointer;
 `;
 
 const DesktopMenu = styled.div`
