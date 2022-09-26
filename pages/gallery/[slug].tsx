@@ -161,16 +161,7 @@ const Gallery: NextPage = ({
             close={closeModal}
             showModal={showModal}
           />
-          <GoBackContainer
-            variants={motionGoBackArrow}
-            whileHover={{ x: 0 }}
-            whileTap={{ scale: 0.9 }}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <BackArrow />
-          </GoBackContainer>
+          <BackArrow />
           <PhotoAlbum
             layout="masonry"
             photos={data}
@@ -197,12 +188,6 @@ const motionContainer = {
   exit: { opacity: 0 },
 };
 
-const motionGoBackArrow = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, x: 10, transition: { duration: 0.2 } },
-  exit: { opacity: 0 },
-};
-
 const StyledGalleryContainer = styled(motion(StyledArticle))`
   flex-direction: column;
   @media (max-width: 1500px) {
@@ -214,9 +199,4 @@ const StyledGalleryContainer = styled(motion(StyledArticle))`
   @media (max-width: 800px) {
     padding: 5rem 0 2rem 0;
   }
-`;
-
-const GoBackContainer = styled(motion.div)`
-  width: 1.8rem;
-  padding-bottom: 0.5rem;
 `;
