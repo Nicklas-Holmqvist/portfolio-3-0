@@ -17,7 +17,6 @@ import { ToTop } from '../../components/ToTop';
 import { BackArrow } from '../../components/BackArrow';
 import { StyledArticle } from '../../components/StyledArticle';
 import { ParsedUrlQuery } from 'querystring';
-import Head from 'next/head';
 
 interface Galleries {
   slug: string;
@@ -84,13 +83,12 @@ export const getStaticProps: GetStaticProps<{
     return image.responsiveImage;
   });
   return {
-    props: { data, response },
+    props: { data },
   };
 };
 
 const Gallery: NextPage = ({
   data,
-  response,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [activeImage, setActiveImage] = useState<number>(0);
@@ -152,9 +150,6 @@ const Gallery: NextPage = ({
       animate="visible"
       exit="exit"
     >
-      <Head>
-        <title>{response.gallery.title}</title>
-      </Head>
       {isLoading ? (
         <Loader />
       ) : (
@@ -166,7 +161,16 @@ const Gallery: NextPage = ({
             close={closeModal}
             showModal={showModal}
           />
-          <BackArrow />
+          <GoBackContainer
+            variants={motionGoBackArrow}
+            whileHover={{ x: 0 }}
+            whileTap={{ scale: 0.9 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <BackArrow />
+          </GoBackContainer>
           <PhotoAlbum
             layout="masonry"
             photos={data}
@@ -193,6 +197,12 @@ const motionContainer = {
   exit: { opacity: 0 },
 };
 
+const motionGoBackArrow = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, x: 10, transition: { duration: 0.2 } },
+  exit: { opacity: 0 },
+};
+
 const StyledGalleryContainer = styled(motion(StyledArticle))`
   flex-direction: column;
   @media (max-width: 1500px) {
@@ -204,4 +214,9 @@ const StyledGalleryContainer = styled(motion(StyledArticle))`
   @media (max-width: 800px) {
     padding: 5rem 0 2rem 0;
   }
+`;
+
+const GoBackContainer = styled(motion.div)`
+  width: 1.8rem;
+  padding-bottom: 0.5rem;
 `;
