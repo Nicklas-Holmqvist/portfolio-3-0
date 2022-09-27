@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Section } from '../queries/dataQuery';
 import { StyledArticle } from './StyledArticle';
 import { StructuredText } from 'react-datocms';
+import { useInView } from 'framer-motion';
 
 interface GalleryStandardSectionProps {
   data: Section;
@@ -14,11 +15,16 @@ interface GalleryStandardSectionProps {
 export const GalleryStandardSection: React.FC<GalleryStandardSectionProps> = ({
   data,
 }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false });
+
   return (
     <StyledArticle
+      inView={isInView}
       role={data.ariaRole}
       aria-label={data.ariaLabel}
       id={data.sectionId}
+      ref={ref}
     >
       <ImageSection>
         <ImageContainer>

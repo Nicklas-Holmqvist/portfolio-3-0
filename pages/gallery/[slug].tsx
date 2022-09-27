@@ -112,7 +112,7 @@ const Gallery: NextPage = ({
   };
 
   const nextImage = () => {
-    if (activeImage >= data.length - 1) return;
+    if (activeImage >= data.images.length - 1) return;
     else setActiveImage(activeImage + 1);
   };
 

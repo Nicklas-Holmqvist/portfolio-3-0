@@ -5,17 +5,22 @@ import styled from 'styled-components';
 import { Section } from '../queries/dataQuery';
 import { StructuredText } from 'react-datocms';
 import { StyledArticle } from './StyledArticle';
+import { useInView } from 'framer-motion';
 
 interface About {
   data: Section;
 }
 
 export const About: React.FC<About> = ({ data }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false });
   return (
     <StyledArticle
+      inView={isInView}
       role={data.ariaRole}
       aria-label={data.ariaLabel}
       id={data.sectionId}
+      ref={ref}
     >
       <InformationSection>
         <h2>{data.titleFirst}</h2>
