@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { IconLink } from './IconLink';
@@ -8,11 +8,22 @@ interface FooterSectionProps {}
 
 export const FooterSection: React.FC<FooterSectionProps> = () => {
   const date = new Date();
+  const [footerData, setFooterData] = useState<AllFooter[]>([]);
+
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      const response = await fetch('api/get-footer');
+      const data = await response.json();
+      if (data.status === false) setFooterData([]);
+      setFooterData(data.allFooters);
+    };
+    fetchFooterData();
+  }, []);
 
   return (
     <Footer>
       <IconContainer>
-        {/* {footerData.map((icon, index) => (
+        {footerData.map((icon, index) => (
           <span key={index}>
             <IconLink
               src={icon.image.url}
@@ -21,7 +32,7 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
               hasHover={icon.hasHover}
             />
           </span>
-        ))} */}
+        ))}
       </IconContainer>
       <p>
         Copyright &copy; | {date.getFullYear()} - Nicklas Holmqvist - All rights

@@ -8,13 +8,13 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import PhotoAlbum from 'react-photo-album';
 import { motion } from 'framer-motion';
-import { request } from '../../lib/datocms';
 import { ParsedUrlQuery } from 'querystring';
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
 
 import Loader from '../../components/Loader';
 import { Modal } from '../../components/Modal';
 import { ToTop } from '../../components/ToTop';
+import { request } from '../../lib/datocms';
 import { BackArrow } from '../../components/BackArrow';
 import { StyledArticle } from '../../components/StyledArticle';
 import { ImageGallery, ResponsiveImage } from '../../queries/dataQuery';
