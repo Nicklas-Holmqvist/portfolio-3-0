@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+export interface StyledArticleProps {
+  inView: boolean;
+}
 
-export const StyledArticle = styled.article`
+export const StyledArticle = styled.article<StyledArticleProps>`
+  ${({ inView }) =>
+    inView
+      ? css`
+          opacity: 1;
+        `
+      : css`
+          opacity: 0;
+        `}
   min-height: 900px;
   height: 100%;
   max-width: 1900px;
@@ -9,6 +20,7 @@ export const StyledArticle = styled.article`
   box-sizing: border-box;
   padding: 6rem 10rem 4rem 10rem;
   display: flex;
+  transition: all 1.5s 0.5s;
   #oldBuildings {
     justify-content: center;
   }
