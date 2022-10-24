@@ -55,7 +55,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
 
   useEffect(() => {
     const fetchHeaderData = async () => {
-      const response = await fetch('api/get-header');
+      const response = await fetch('/api/get-header');
       const data = await response.json();
       if (data.status === false) setHeaderData(undefined);
       setHeaderData(data);
