@@ -12,7 +12,7 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
 
   useEffect(() => {
     const fetchFooterData = async () => {
-      const response = await fetch('api/get-footer');
+      const response = await fetch('/api/get-footer');
       const data = await response.json();
       if (data.status === false) setFooterData([]);
       setFooterData(data.allFooters);
