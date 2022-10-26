@@ -20,7 +20,7 @@ export const BackArrow: React.FC<BackArrowProps> = () => {
     >
       <Link href="/" replace>
         <a>
-          <Icon src={backArrow} alt={'go back'} hasHover={false} size={24} />
+          <Icon src={backArrow} alt={'go back'} hover={false} size={24} />
         </a>
       </Link>
     </GoBackContainer>

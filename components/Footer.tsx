@@ -29,7 +29,7 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
               src={icon.image.url}
               alt={icon.image.url}
               href={icon.href}
-              hasHover={icon.hasHover}
+              hover={icon.hover}
             />
           </span>
         ))}

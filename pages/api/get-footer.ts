@@ -27,7 +27,7 @@ export default async function handler(
               alt
             }
             title
-            hasHover
+            hover
             size
             href
           }
