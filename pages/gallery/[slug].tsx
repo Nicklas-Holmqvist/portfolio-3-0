@@ -91,12 +91,11 @@ const Gallery: NextPage = ({
 
   const [showToTop, setShowToTop] = useState<boolean>(false);
 
+  if (!data) setIsLoading(true);
+
   const toggleShowToTop: () => void = () => {
     window.scrollY >= 200 ? setShowToTop(true) : setShowToTop(false);
   };
-
-  if (!data) setIsLoading(true);
-
   const openModal = (event: BaseSyntheticEvent) => {
     const currentImage = event.target.src;
     const index = data.images.findIndex((image: ResponsiveImage) => {
@@ -130,10 +129,14 @@ const Gallery: NextPage = ({
 
   useEffect(() => {
     window.addEventListener('resize', disableModal);
-    window.scrollTo(0, 0);
   });
 
   useEffect(() => {
+    window.addEventListener('scroll', toggleShowToTop);
+  });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
     disableModal();
   }, []);
 
