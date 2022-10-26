@@ -1,14 +1,22 @@
+import { useInView } from 'framer-motion';
+import styled, { css } from 'styled-components';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import { IconLink } from './IconLink';
 import { AllFooter } from '../queries/dataQuery';
 
 interface FooterSectionProps {}
 
+export interface StyledFooterProps {
+  inView: boolean;
+}
+
 export const FooterSection: React.FC<FooterSectionProps> = () => {
   const date = new Date();
   const [footerData, setFooterData] = useState<AllFooter[]>([]);
+
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false });
 
   useEffect(() => {
     const fetchFooterData = async () => {
@@ -21,7 +29,7 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
   }, []);
 
   return (
-    <Footer>
+    <Footer inView={isInView} ref={ref}>
       <IconContainer>
         {footerData.map((icon, index) => (
           <span key={index}>
@@ -42,13 +50,22 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
   );
 };
 
-const Footer = styled.footer`
+const Footer = styled.footer<StyledFooterProps>`
+  ${({ inView }) =>
+    inView
+      ? css`
+          opacity: 1;
+        `
+      : css`
+          opacity: 0;
+        `}
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding-bottom: 1rem;
   margin: auto;
+  transition: all 1.5s 0.5s;
   p {
     text-align: center;
   }
