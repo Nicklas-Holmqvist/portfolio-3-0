@@ -76,7 +76,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
     <>
       <Header
         height={headerHeight}
-        active={activeBackgroundColor ? activeBackgroundColor : false}
+        active={activeBackgroundColor}
         variants={motionHeader}
         initial="hidden"
         animate="visible"

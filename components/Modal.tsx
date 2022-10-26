@@ -61,13 +61,13 @@ export const Modal: React.FC<ModalProps> = ({
               </StyledImageText>
             </AnimatePresence>
             <StyledCloseButton onClick={close}>
-              <Icon src={closeIcon} alt={'close'} hasHover={false} />
+              <Icon src={closeIcon} alt={'close'} hover={false} />
             </StyledCloseButton>
             <StyledPrevButton onClick={prev} className={'arrow'}>
-              <Icon src={prevIcon} alt={'prev'} hasHover={true} size={30} />
+              <Icon src={prevIcon} alt={'prev'} hover={true} size={30} />
             </StyledPrevButton>
             <StyledNextButton onClick={next} className={'arrow'}>
-              <Icon src={nextIcon} alt={'next'} hasHover={true} size={30} />
+              <Icon src={nextIcon} alt={'next'} hover={true} size={30} />
             </StyledNextButton>
           </StyledModalContainer>
         </StyledModal>

@@ -16,7 +16,7 @@ export const ToTop: React.FC<ToTopProps> = () => {
       whileHover="hover"
       onClick={() => window.scrollTo(0, 0)}
     >
-      <Icon src={toTopIcon} alt={'gå upp'} hasHover={false} size={40} />
+      <Icon src={toTopIcon} alt={'gå upp'} hover={false} size={40} />
     </StyledToTop>
   );
 };

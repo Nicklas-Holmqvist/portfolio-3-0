@@ -7,18 +7,18 @@ interface IconLinkProps {
   href: string;
   src: string;
   alt: string;
-  hasHover: boolean;
+  hover: boolean;
 }
 
 export const IconLink: React.FC<IconLinkProps> = ({
   href,
   src,
   alt,
-  hasHover,
+  hover,
 }) => {
   return (
     <StyledIconLink href={href} target="_blank">
-      <Icon src={src} alt={alt} hasHover={hasHover} />
+      <Icon src={src} alt={alt} hover={hover} />
     </StyledIconLink>
   );
 };

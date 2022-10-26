@@ -48,7 +48,7 @@ export interface AllFooter {
     alt: string;
   };
   title: string;
-  hasHover: boolean;
+  hover: boolean;
   size: number;
   href: string;
 }
@@ -58,7 +58,7 @@ export interface AllIcon {
     alt: string;
   };
   title: string;
-  hasHover: boolean;
+  hover: boolean;
   size: number;
   href: string;
 }
@@ -161,7 +161,7 @@ export const dataQuery = `query allData {
     }
     size
     href
-    hasHover
+    hover
     title
   }
   allIcons(orderBy: order_ASC) {
@@ -171,7 +171,7 @@ export const dataQuery = `query allData {
     }
     size
     href
-    hasHover
+    hover
     title
   }
   allNavigations(orderBy: order_ASC) {
