@@ -59,6 +59,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           slug
           imageSet {
             responsiveImage {
+              alt
               src
               srcSet
               width
@@ -148,7 +149,7 @@ const Gallery: NextPage = ({
       exit="exit"
     >
       <Head>
-        <title>{data.head}</title>
+        <title>Galleri {data.head} | Nicklas Holmqvist</title>
       </Head>
       {isLoading ? (
         <Loader />
@@ -171,6 +172,7 @@ const Gallery: NextPage = ({
           >
             <BackArrow />
           </GoBackContainer>
+          <StyledTitle>{data.head}</StyledTitle>
           <PhotoAlbum
             layout="masonry"
             photos={data.images}
@@ -219,4 +221,13 @@ const StyledGalleryContainer = styled(motion(StyledArticle))`
 const GoBackContainer = styled(motion.div)`
   width: 1.8rem;
   padding-bottom: 0.5rem;
+  @media (max-width: 800px) {
+    padding-left: 0.8rem;
+  }
+`;
+const StyledTitle = styled.h1`
+  padding-bottom: 1rem;
+  @media (max-width: 800px) {
+    text-align: center;
+  }
 `;

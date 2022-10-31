@@ -33,6 +33,13 @@ html,body {
   scroll-behavior: smooth;
 }
 
+h1 {
+  margin: 0px;
+  padding-bottom: 0.5rem;
+  font-size: 2rem;
+  font-family: 'Lato', sans-serif;
+}
+
 h2 {
   margin: 0px;
   padding-bottom: 0.5rem;
