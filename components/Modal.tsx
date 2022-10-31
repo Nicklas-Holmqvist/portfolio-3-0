@@ -57,7 +57,7 @@ export const Modal: React.FC<ModalProps> = ({
                 />
               </StyledImageContainer>
               <StyledImageText variants={motionText} exit={{ opacity: 0 }}>
-                {image.title}
+                {image.alt}
               </StyledImageText>
             </AnimatePresence>
             <StyledCloseButton onClick={close}>
@@ -94,7 +94,7 @@ const motionText = {
 };
 
 const StyledImageText = styled(motion.p)`
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-align: center;
   color: #2a2a2a;
 `;
@@ -123,7 +123,7 @@ const StyledModalContainer = styled(motion.div)`
 const StyledImageContainer = styled(motion.div)`
   position: relative;
   height: 80%;
-  margin: 4rem 5rem 1rem 5rem;
+  margin: 4rem 5rem 0.5rem 5rem;
 `;
 
 const StyledButton = styled.button`
