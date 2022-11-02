@@ -25,7 +25,8 @@ interface Galleries {
 
 interface GetStaticPropsResponse {
   images: ResponsiveImage[];
-  head: string;
+  pageTitle: string;
+  metaTitle: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -57,6 +58,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         gallery(filter: {slug: {eq: ${slug}}}) {
           title
           slug
+          metaTitle
           imageSet {
             responsiveImage {
               alt
@@ -74,7 +76,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     images: response.gallery.imageSet.map((image) => {
       return image.responsiveImage;
     }),
-    head: response.gallery.title,
+    pageTitle: response.gallery.title,
+    metaTitle: response.gallery.metaTitle,
   };
 
   return {
@@ -149,7 +152,7 @@ const Gallery: NextPage = ({
       exit="exit"
     >
       <Head>
-        <title>Galleri {data.head} | Nicklas Holmqvist</title>
+        <title>{data.metaTitle}</title>
       </Head>
       {isLoading ? (
         <Loader />
@@ -172,7 +175,7 @@ const Gallery: NextPage = ({
           >
             <BackArrow />
           </GoBackContainer>
-          <StyledTitle>{data.head}</StyledTitle>
+          <StyledTitle>{data.pageTitle}</StyledTitle>
           <PhotoAlbum
             layout="masonry"
             photos={data.images}

@@ -92,6 +92,7 @@ export interface ImageGallery {
 export interface Gallery {
   title: string;
   slug: string;
+  metaTitle: string;
   imageSet: ImageSet[];
 }
 
