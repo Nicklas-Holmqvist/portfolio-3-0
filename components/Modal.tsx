@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-
-import nextIcon from '../assets/svg/next-arrow.svg';
-import prevIcon from '../assets/svg/prev-arrow.svg';
-import closeIcon from '../assets/svg/bi_x-circle.svg';
-import { Icon } from './Icon';
+import {
+  LuChevronLeft,
+  LuChevronRight,
+  LuXCircle,
+} from '@metamist/lucide-react';
 
 interface ModalProps {
   prev: () => void;
@@ -30,6 +30,8 @@ export const Modal: React.FC<ModalProps> = ({
   next,
   close,
 }) => {
+  const [loadedImage, setLoadedImage] = useState<boolean>(false);
+
   return (
     <AnimatePresence mode="wait">
       {showModal ? (
@@ -54,20 +56,24 @@ export const Modal: React.FC<ModalProps> = ({
                   title={image.alt}
                   layout="fill"
                   objectFit="contain"
+                  priority
+                  onLoad={() => setLoadedImage(true)}
                 />
               </StyledImageContainer>
-              <StyledImageText variants={motionText} exit={{ opacity: 0 }}>
-                {image.alt}
-              </StyledImageText>
+              {loadedImage ? (
+                <StyledImageText variants={motionText} exit={{ opacity: 0 }}>
+                  {image.alt}
+                </StyledImageText>
+              ) : undefined}
             </AnimatePresence>
             <StyledCloseButton onClick={close}>
-              <Icon src={closeIcon} alt={'close'} hover={false} />
+              <LuXCircle onClick={close} color={'#f0f0f0'} size={24} />
             </StyledCloseButton>
             <StyledPrevButton onClick={prev} className={'arrow'}>
-              <Icon src={prevIcon} alt={'prev'} hover={true} size={30} />
+              <LuChevronLeft color={'#f0f0f0'} size={40} />
             </StyledPrevButton>
             <StyledNextButton onClick={next} className={'arrow'}>
-              <Icon src={nextIcon} alt={'next'} hover={true} size={30} />
+              <LuChevronRight color={'#f0f0f0'} size={40} />
             </StyledNextButton>
           </StyledModalContainer>
         </StyledModal>
@@ -96,7 +102,7 @@ const motionText = {
 const StyledImageText = styled(motion.p)`
   font-size: 1rem;
   text-align: center;
-  color: #2a2a2a;
+  color: #f0f0f0;
 `;
 
 const StyledModal = styled(motion.article)`
@@ -105,7 +111,7 @@ const StyledModal = styled(motion.article)`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #2a2a2a;
   z-index: 1000;
   h2 {
     text-align: center;
@@ -137,13 +143,14 @@ const StyledButton = styled.button`
     transition: all, 0.1s;
     cursor: pointer;
     &:hover {
-      background: #2a2a2a11;
+      background: #f0f0f011;
       transform: scale(1.1);
     }
   }
 `;
 
 const StyledCloseButton = styled(StyledButton)`
+  cursor: pointer;
   top: 1%;
   right: 5%;
   @media (max-width: 1300px) {
