@@ -17,7 +17,9 @@
     "react-datocms": "^3.1.0",
     "react-dom": "18.2.0",
     "react-photo-album": "^1.16.1",
-    "styled-components": "^5.3.5"
+    "react-responsive": "^9.0.2",
+    "styled-components": "^5.3.5",
+    "@metamist/lucide-react": "^0.72.0-patch4"
   },
   "devDependencies": {
     "@types/node": "18.7.6",

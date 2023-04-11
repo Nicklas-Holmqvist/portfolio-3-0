@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import React, { useEffect, useState } from 'react';
 
 import { MobileNavigation } from './MobileNavigation';
@@ -32,11 +33,16 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
   const [activeBackgroundColor, setActiveBackgroundColor] =
     useState<boolean>(false);
   const [drawer, setDrawer] = useState<boolean>(false);
-  const [mobileView, setMobileView] = useState<boolean>(false);
-  const [headerData, setHeaderData] = useState<HeaderDataQuery>();
+  const [headerData, setHeaderData] = useState<HeaderDataQuery | undefined>(
+    undefined
+  );
 
   const path = useRouter();
   const headerHeight: number = 70;
+
+  const mobileView = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
 
   const changeBackgroundColor: () => void = () => {
     window.scrollY >= headerHeight
@@ -44,13 +50,8 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
       : setActiveBackgroundColor(false);
   };
 
-  const changeMobileView = () => {
-    const innerWidth = window.innerWidth;
-    if (innerWidth <= 800) setMobileView(true);
-    else {
-      setMobileView(false);
-      setDrawer(false);
-    }
+  const autoCloseDrawer = () => {
+    mobileView ? undefined : setDrawer(false);
   };
 
   useEffect(() => {
@@ -65,12 +66,8 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', changeBackgroundColor);
-    window.addEventListener('resize', changeMobileView);
+    window.addEventListener('resize', autoCloseDrawer);
   });
-
-  useEffect(() => {
-    changeMobileView();
-  }, []);
 
   return (
     <>
@@ -81,7 +78,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
         initial="hidden"
         animate="visible"
       >
-        {!headerData ? null : (
+        {!headerData ? undefined : (
           <>
             {mobileView ? (
               <MobileNavigation
