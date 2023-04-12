@@ -100,7 +100,7 @@ const MobileNav = styled.nav`
   a {
     margin: 1.8rem 0;
     padding-bottom: 0.5rem;
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 `;
 

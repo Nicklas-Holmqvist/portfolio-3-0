@@ -71,13 +71,7 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
 
   return (
     <>
-      <Header
-        height={headerHeight}
-        active={activeBackgroundColor}
-        variants={motionHeader}
-        initial="hidden"
-        animate="visible"
-      >
+      <Header height={headerHeight} active={activeBackgroundColor}>
         {!headerData ? undefined : (
           <>
             {mobileView ? (
@@ -102,17 +96,13 @@ export const NavHeader: React.FC<NavHeaderProps> = () => {
   );
 };
 
-const motionHeader = {
-  hidden: { opacity: 0, y: -70 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const Header = styled(motion.header)<StyledHeaderProps>`
+const Header = styled.header<StyledHeaderProps>`
   box-sizing: border-box;
   position: fixed;
   width: 100%;
   height: ${(props) => props.height}px;
   z-index: 100;
+  transition: opacity ease-in 1s;
   ${({ active }) =>
     active
       ? css`
