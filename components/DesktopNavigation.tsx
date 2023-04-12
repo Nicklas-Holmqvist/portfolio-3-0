@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { Logo } from './Logo';
 import { NavLink } from './NavLink';
@@ -26,7 +27,11 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
   logo,
 }) => {
   return (
-    <DesktopMenu>
+    <DesktopMenu
+      variants={motionDesktopMenu}
+      initial="hidden"
+      animate="visible"
+    >
       <Logo data={logo} />
       <DesktopNav>
         {data.map((navLink, index) => (
@@ -42,7 +47,12 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
   );
 };
 
-const DesktopMenu = styled.div`
+const motionDesktopMenu = {
+  hidden: { opacity: 0, y: -70 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const DesktopMenu = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   align-items: center;
